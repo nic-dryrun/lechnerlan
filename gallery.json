@@ -1,0 +1,497 @@
+[
+  {
+    "title": "Noir \u2014 Cathedral",
+    "full": "images/lechner_lan_noir_6.png",
+    "thumb": "thumbs/lechner_lan_noir_6.jpg",
+    "category": "Noir",
+    "filename": "lechner_lan_noir_6.png",
+    "jpg": "jpg/lechner_lan_noir_6.jpg",
+    "jpg_filename": "lechner_lan_noir_6.jpg"
+  },
+  {
+    "title": "Noir \u2014 Full Spread",
+    "full": "images/lechner_lan_comic_noir_full.png",
+    "thumb": "thumbs/lechner_lan_comic_noir_full.jpg",
+    "category": "Noir",
+    "filename": "lechner_lan_comic_noir_full.png",
+    "jpg": "jpg/lechner_lan_comic_noir_full.jpg",
+    "jpg_filename": "lechner_lan_comic_noir_full.jpg"
+  },
+  {
+    "title": "Noir \u2014 Interrogation",
+    "full": "images/lechner_lan_noir_4.png",
+    "thumb": "thumbs/lechner_lan_noir_4.jpg",
+    "category": "Noir",
+    "filename": "lechner_lan_noir_4.png",
+    "jpg": "jpg/lechner_lan_noir_4.jpg",
+    "jpg_filename": "lechner_lan_noir_4.jpg"
+  },
+  {
+    "title": "Noir \u2014 Rainy Alley",
+    "full": "images/lechner_lan_noir_2.png",
+    "thumb": "thumbs/lechner_lan_noir_2.jpg",
+    "category": "Noir",
+    "filename": "lechner_lan_noir_2.png",
+    "jpg": "jpg/lechner_lan_noir_2.jpg",
+    "jpg_filename": "lechner_lan_noir_2.jpg"
+  },
+  {
+    "title": "Noir \u2014 Rooftop",
+    "full": "images/lechner_lan_noir_3.png",
+    "thumb": "thumbs/lechner_lan_noir_3.jpg",
+    "category": "Noir",
+    "filename": "lechner_lan_noir_3.png",
+    "jpg": "jpg/lechner_lan_noir_3.jpg",
+    "jpg_filename": "lechner_lan_noir_3.jpg"
+  },
+  {
+    "title": "Noir \u2014 Silhouettes",
+    "full": "images/lechner_lan_noir_5.png",
+    "thumb": "thumbs/lechner_lan_noir_5.jpg",
+    "category": "Noir",
+    "filename": "lechner_lan_noir_5.png",
+    "jpg": "jpg/lechner_lan_noir_5.jpg",
+    "jpg_filename": "lechner_lan_noir_5.jpg"
+  },
+  {
+    "title": "Comic",
+    "full": "images/lechner_lan_comic.png",
+    "thumb": "thumbs/lechner_lan_comic.jpg",
+    "category": "Comic",
+    "filename": "lechner_lan_comic.png",
+    "jpg": "jpg/lechner_lan_comic.jpg",
+    "jpg_filename": "lechner_lan_comic.jpg"
+  },
+  {
+    "title": "Comic \u2014 Battlefield",
+    "full": "images/lechner_lan_comic_battlefield.png",
+    "thumb": "thumbs/lechner_lan_comic_battlefield.jpg",
+    "category": "Comic",
+    "filename": "lechner_lan_comic_battlefield.png",
+    "jpg": "jpg/lechner_lan_comic_battlefield.jpg",
+    "jpg_filename": "lechner_lan_comic_battlefield.jpg"
+  },
+  {
+    "title": "Comic \u2014 Cover",
+    "full": "images/lechner_lan_comic_cover.png",
+    "thumb": "thumbs/lechner_lan_comic_cover.jpg",
+    "category": "Comic",
+    "filename": "lechner_lan_comic_cover.png",
+    "jpg": "jpg/lechner_lan_comic_cover.jpg",
+    "jpg_filename": "lechner_lan_comic_cover.jpg"
+  },
+  {
+    "title": "Comic \u2014 Grid",
+    "full": "images/lechner_lan_comic_grid.png",
+    "thumb": "thumbs/lechner_lan_comic_grid.jpg",
+    "category": "Comic",
+    "filename": "lechner_lan_comic_grid.png",
+    "jpg": "jpg/lechner_lan_comic_grid.jpg",
+    "jpg_filename": "lechner_lan_comic_grid.jpg"
+  },
+  {
+    "title": "Comic \u2014 Kirby",
+    "full": "images/lechner_lan_comic_kirby.png",
+    "thumb": "thumbs/lechner_lan_comic_kirby.jpg",
+    "category": "Comic",
+    "filename": "lechner_lan_comic_kirby.png",
+    "jpg": "jpg/lechner_lan_comic_kirby.jpg",
+    "jpg_filename": "lechner_lan_comic_kirby.jpg"
+  },
+  {
+    "title": "Comic \u2014 Medallion",
+    "full": "images/lechner_lan_comic_medallion.png",
+    "thumb": "thumbs/lechner_lan_comic_medallion.jpg",
+    "category": "Comic",
+    "filename": "lechner_lan_comic_medallion.png",
+    "jpg": "jpg/lechner_lan_comic_medallion.jpg",
+    "jpg_filename": "lechner_lan_comic_medallion.jpg"
+  },
+  {
+    "title": "Comic \u2014 Splash",
+    "full": "images/lechner_lan_comic_splash.png",
+    "thumb": "thumbs/lechner_lan_comic_splash.jpg",
+    "category": "Comic",
+    "filename": "lechner_lan_comic_splash.png",
+    "jpg": "jpg/lechner_lan_comic_splash.jpg",
+    "jpg_filename": "lechner_lan_comic_splash.jpg"
+  },
+  {
+    "title": "Comic \u2014 Strip",
+    "full": "images/lechner_lan_comic_strip.png",
+    "thumb": "thumbs/lechner_lan_comic_strip.jpg",
+    "category": "Comic",
+    "filename": "lechner_lan_comic_strip.png",
+    "jpg": "jpg/lechner_lan_comic_strip.jpg",
+    "jpg_filename": "lechner_lan_comic_strip.jpg"
+  },
+  {
+    "title": "Comic \u2014 Tournament",
+    "full": "images/lechner_lan_comic_tournament.png",
+    "thumb": "thumbs/lechner_lan_comic_tournament.jpg",
+    "category": "Comic",
+    "filename": "lechner_lan_comic_tournament.png",
+    "jpg": "jpg/lechner_lan_comic_tournament.jpg",
+    "jpg_filename": "lechner_lan_comic_tournament.jpg"
+  },
+  {
+    "title": "Comic \u2014 Versus",
+    "full": "images/lechner_lan_comic_versus.png",
+    "thumb": "thumbs/lechner_lan_comic_versus.jpg",
+    "category": "Comic",
+    "filename": "lechner_lan_comic_versus.png",
+    "jpg": "jpg/lechner_lan_comic_versus.jpg",
+    "jpg_filename": "lechner_lan_comic_versus.jpg"
+  },
+  {
+    "title": "Cyberpunk",
+    "full": "images/lechner_lan_cyberpunk.png",
+    "thumb": "thumbs/lechner_lan_cyberpunk.jpg",
+    "category": "Cyberpunk",
+    "filename": "lechner_lan_cyberpunk.png",
+    "jpg": "jpg/lechner_lan_cyberpunk.jpg",
+    "jpg_filename": "lechner_lan_cyberpunk.jpg"
+  },
+  {
+    "title": "Cyberpunk \u2014 2077",
+    "full": "images/lechner_lan_cp_2077.png",
+    "thumb": "thumbs/lechner_lan_cp_2077.jpg",
+    "category": "Cyberpunk",
+    "filename": "lechner_lan_cp_2077.png",
+    "jpg": "jpg/lechner_lan_cp_2077.jpg",
+    "jpg_filename": "lechner_lan_cp_2077.jpg"
+  },
+  {
+    "title": "Cyberpunk \u2014 Akira",
+    "full": "images/lechner_lan_cp_akira.png",
+    "thumb": "thumbs/lechner_lan_cp_akira.jpg",
+    "category": "Cyberpunk",
+    "filename": "lechner_lan_cp_akira.png",
+    "jpg": "jpg/lechner_lan_cp_akira.jpg",
+    "jpg_filename": "lechner_lan_cp_akira.jpg"
+  },
+  {
+    "title": "Cyberpunk \u2014 Biopunk",
+    "full": "images/lechner_lan_cp_biopunk.png",
+    "thumb": "thumbs/lechner_lan_cp_biopunk.jpg",
+    "category": "Cyberpunk",
+    "filename": "lechner_lan_cp_biopunk.png",
+    "jpg": "jpg/lechner_lan_cp_biopunk.jpg",
+    "jpg_filename": "lechner_lan_cp_biopunk.jpg"
+  },
+  {
+    "title": "Cyberpunk \u2014 Blade Runner",
+    "full": "images/lechner_lan_cp_bladerunner.png",
+    "thumb": "thumbs/lechner_lan_cp_bladerunner.jpg",
+    "category": "Cyberpunk",
+    "filename": "lechner_lan_cp_bladerunner.png",
+    "jpg": "jpg/lechner_lan_cp_bladerunner.jpg",
+    "jpg_filename": "lechner_lan_cp_bladerunner.jpg"
+  },
+  {
+    "title": "Cyberpunk \u2014 Tron",
+    "full": "images/lechner_lan_cp_tron.png",
+    "thumb": "thumbs/lechner_lan_cp_tron.jpg",
+    "category": "Cyberpunk",
+    "filename": "lechner_lan_cp_tron.png",
+    "jpg": "jpg/lechner_lan_cp_tron.jpg",
+    "jpg_filename": "lechner_lan_cp_tron.jpg"
+  },
+  {
+    "title": "Retro",
+    "full": "images/lechner_lan_retro.png",
+    "thumb": "thumbs/lechner_lan_retro.jpg",
+    "category": "Retro",
+    "filename": "lechner_lan_retro.png",
+    "jpg": "jpg/lechner_lan_retro.jpg",
+    "jpg_filename": "lechner_lan_retro.jpg"
+  },
+  {
+    "title": "Retro \u2014 Arcade",
+    "full": "images/lechner_lan_retro_arcade.png",
+    "thumb": "thumbs/lechner_lan_retro_arcade.jpg",
+    "category": "Retro",
+    "filename": "lechner_lan_retro_arcade.png",
+    "jpg": "jpg/lechner_lan_retro_arcade.jpg",
+    "jpg_filename": "lechner_lan_retro_arcade.jpg"
+  },
+  {
+    "title": "Retro \u2014 Atomic",
+    "full": "images/lechner_lan_retro_atomic.png",
+    "thumb": "thumbs/lechner_lan_retro_atomic.jpg",
+    "category": "Retro",
+    "filename": "lechner_lan_retro_atomic.png",
+    "jpg": "jpg/lechner_lan_retro_atomic.jpg",
+    "jpg_filename": "lechner_lan_retro_atomic.jpg"
+  },
+  {
+    "title": "Retro \u2014 Propaganda",
+    "full": "images/lechner_lan_retro_propaganda.png",
+    "thumb": "thumbs/lechner_lan_retro_propaganda.jpg",
+    "category": "Retro",
+    "filename": "lechner_lan_retro_propaganda.png",
+    "jpg": "jpg/lechner_lan_retro_propaganda.jpg",
+    "jpg_filename": "lechner_lan_retro_propaganda.jpg"
+  },
+  {
+    "title": "Retro \u2014 Pulp",
+    "full": "images/lechner_lan_retro_pulp.png",
+    "thumb": "thumbs/lechner_lan_retro_pulp.jpg",
+    "category": "Retro",
+    "filename": "lechner_lan_retro_pulp.png",
+    "jpg": "jpg/lechner_lan_retro_pulp.jpg",
+    "jpg_filename": "lechner_lan_retro_pulp.jpg"
+  },
+  {
+    "title": "Retro \u2014 Synthwave",
+    "full": "images/lechner_lan_retro_synthwave.png",
+    "thumb": "thumbs/lechner_lan_retro_synthwave.jpg",
+    "category": "Retro",
+    "filename": "lechner_lan_retro_synthwave.png",
+    "jpg": "jpg/lechner_lan_retro_synthwave.jpg",
+    "jpg_filename": "lechner_lan_retro_synthwave.jpg"
+  },
+  {
+    "title": "Propaganda \u2014 Allied WWII",
+    "full": "images/lechner_lan_prop_2.png",
+    "thumb": "thumbs/lechner_lan_prop_2.jpg",
+    "category": "Propaganda",
+    "filename": "lechner_lan_prop_2.png",
+    "jpg": "jpg/lechner_lan_prop_2.jpg",
+    "jpg_filename": "lechner_lan_prop_2.jpg"
+  },
+  {
+    "title": "Propaganda \u2014 Art Deco WPA",
+    "full": "images/lechner_lan_prop_4.png",
+    "thumb": "thumbs/lechner_lan_prop_4.jpg",
+    "category": "Propaganda",
+    "filename": "lechner_lan_prop_4.png",
+    "jpg": "jpg/lechner_lan_prop_4.jpg",
+    "jpg_filename": "lechner_lan_prop_4.jpg"
+  },
+  {
+    "title": "Propaganda \u2014 Cuban OSPAAAL",
+    "full": "images/lechner_lan_prop_5.png",
+    "thumb": "thumbs/lechner_lan_prop_5.jpg",
+    "category": "Propaganda",
+    "filename": "lechner_lan_prop_5.png",
+    "jpg": "jpg/lechner_lan_prop_5.jpg",
+    "jpg_filename": "lechner_lan_prop_5.jpg"
+  },
+  {
+    "title": "Propaganda \u2014 Cultural Revolution",
+    "full": "images/lechner_lan_prop_3.png",
+    "thumb": "thumbs/lechner_lan_prop_3.jpg",
+    "category": "Propaganda",
+    "filename": "lechner_lan_prop_3.png",
+    "jpg": "jpg/lechner_lan_prop_3.jpg",
+    "jpg_filename": "lechner_lan_prop_3.jpg"
+  },
+  {
+    "title": "Propaganda \u2014 Soviet",
+    "full": "images/lechner_lan_prop_1.png",
+    "thumb": "thumbs/lechner_lan_prop_1.jpg",
+    "category": "Propaganda",
+    "filename": "lechner_lan_prop_1.png",
+    "jpg": "jpg/lechner_lan_prop_1.jpg",
+    "jpg_filename": "lechner_lan_prop_1.jpg"
+  },
+  {
+    "title": "1950s \u2014 Bowling Neon",
+    "full": "images/lechner_lan_50s_5.png",
+    "thumb": "thumbs/lechner_lan_50s_5.jpg",
+    "category": "1950s",
+    "filename": "lechner_lan_50s_5.png",
+    "jpg": "jpg/lechner_lan_50s_5.jpg",
+    "jpg_filename": "lechner_lan_50s_5.jpg"
+  },
+  {
+    "title": "1950s \u2014 Comic Ad",
+    "full": "images/lechner_lan_50s_4.png",
+    "thumb": "thumbs/lechner_lan_50s_4.jpg",
+    "category": "1950s",
+    "filename": "lechner_lan_50s_4.png",
+    "jpg": "jpg/lechner_lan_50s_4.jpg",
+    "jpg_filename": "lechner_lan_50s_4.jpg"
+  },
+  {
+    "title": "1950s \u2014 Diner",
+    "full": "images/lechner_lan_50s_3.png",
+    "thumb": "thumbs/lechner_lan_50s_3.jpg",
+    "category": "1950s",
+    "filename": "lechner_lan_50s_3.png",
+    "jpg": "jpg/lechner_lan_50s_3.jpg",
+    "jpg_filename": "lechner_lan_50s_3.jpg"
+  },
+  {
+    "title": "1950s \u2014 Drive-In",
+    "full": "images/lechner_lan_50s_1.png",
+    "thumb": "thumbs/lechner_lan_50s_1.jpg",
+    "category": "1950s",
+    "filename": "lechner_lan_50s_1.png",
+    "jpg": "jpg/lechner_lan_50s_1.jpg",
+    "jpg_filename": "lechner_lan_50s_1.jpg"
+  },
+  {
+    "title": "1950s \u2014 Tin Sign",
+    "full": "images/lechner_lan_50s_2.png",
+    "thumb": "thumbs/lechner_lan_50s_2.jpg",
+    "category": "1950s",
+    "filename": "lechner_lan_50s_2.png",
+    "jpg": "jpg/lechner_lan_50s_2.jpg",
+    "jpg_filename": "lechner_lan_50s_2.jpg"
+  },
+  {
+    "title": "90s Arcade \u2014 Genesis",
+    "full": "images/lechner_lan_90s_5.png",
+    "thumb": "thumbs/lechner_lan_90s_5.jpg",
+    "category": "90s Arcade",
+    "filename": "lechner_lan_90s_5.png",
+    "jpg": "jpg/lechner_lan_90s_5.jpg",
+    "jpg_filename": "lechner_lan_90s_5.jpg"
+  },
+  {
+    "title": "90s Arcade \u2014 Marquee",
+    "full": "images/lechner_lan_90s_1.png",
+    "thumb": "thumbs/lechner_lan_90s_1.jpg",
+    "category": "90s Arcade",
+    "filename": "lechner_lan_90s_1.png",
+    "jpg": "jpg/lechner_lan_90s_1.jpg",
+    "jpg_filename": "lechner_lan_90s_1.jpg"
+  },
+  {
+    "title": "90s Arcade \u2014 Roster",
+    "full": "images/lechner_lan_90s_2.png",
+    "thumb": "thumbs/lechner_lan_90s_2.jpg",
+    "category": "90s Arcade",
+    "filename": "lechner_lan_90s_2.png",
+    "jpg": "jpg/lechner_lan_90s_2.jpg",
+    "jpg_filename": "lechner_lan_90s_2.jpg"
+  },
+  {
+    "title": "90s Arcade \u2014 Splash",
+    "full": "images/lechner_lan_90s_4.png",
+    "thumb": "thumbs/lechner_lan_90s_4.jpg",
+    "category": "90s Arcade",
+    "filename": "lechner_lan_90s_4.png",
+    "jpg": "jpg/lechner_lan_90s_4.jpg",
+    "jpg_filename": "lechner_lan_90s_4.jpg"
+  },
+  {
+    "title": "90s Arcade \u2014 VHS",
+    "full": "images/lechner_lan_90s_3.png",
+    "thumb": "thumbs/lechner_lan_90s_3.jpg",
+    "category": "90s Arcade",
+    "filename": "lechner_lan_90s_3.png",
+    "jpg": "jpg/lechner_lan_90s_3.jpg",
+    "jpg_filename": "lechner_lan_90s_3.jpg"
+  },
+  {
+    "title": "Tournament \u2014 Boxing",
+    "full": "images/lechner_lan_tour_1.png",
+    "thumb": "thumbs/lechner_lan_tour_1.jpg",
+    "category": "Tournament",
+    "filename": "lechner_lan_tour_1.png",
+    "jpg": "jpg/lechner_lan_tour_1.jpg",
+    "jpg_filename": "lechner_lan_tour_1.jpg"
+  },
+  {
+    "title": "Tournament \u2014 Circus",
+    "full": "images/lechner_lan_tour_4.png",
+    "thumb": "thumbs/lechner_lan_tour_4.jpg",
+    "category": "Tournament",
+    "filename": "lechner_lan_tour_4.png",
+    "jpg": "jpg/lechner_lan_tour_4.jpg",
+    "jpg_filename": "lechner_lan_tour_4.jpg"
+  },
+  {
+    "title": "Tournament \u2014 Derby",
+    "full": "images/lechner_lan_tour_3.png",
+    "thumb": "thumbs/lechner_lan_tour_3.jpg",
+    "category": "Tournament",
+    "filename": "lechner_lan_tour_3.png",
+    "jpg": "jpg/lechner_lan_tour_3.jpg",
+    "jpg_filename": "lechner_lan_tour_3.jpg"
+  },
+  {
+    "title": "Tournament \u2014 Esports",
+    "full": "images/lechner_lan_tour_5.png",
+    "thumb": "thumbs/lechner_lan_tour_5.jpg",
+    "category": "Tournament",
+    "filename": "lechner_lan_tour_5.png",
+    "jpg": "jpg/lechner_lan_tour_5.jpg",
+    "jpg_filename": "lechner_lan_tour_5.jpg"
+  },
+  {
+    "title": "Tournament \u2014 Wrestling",
+    "full": "images/lechner_lan_tour_2.png",
+    "thumb": "thumbs/lechner_lan_tour_2.jpg",
+    "category": "Tournament",
+    "filename": "lechner_lan_tour_2.png",
+    "jpg": "jpg/lechner_lan_tour_2.jpg",
+    "jpg_filename": "lechner_lan_tour_2.jpg"
+  },
+  {
+    "title": "Anime",
+    "full": "images/lechner_lan_anime.png",
+    "thumb": "thumbs/lechner_lan_anime.jpg",
+    "category": "Other Styles",
+    "filename": "lechner_lan_anime.png",
+    "jpg": "jpg/lechner_lan_anime.jpg",
+    "jpg_filename": "lechner_lan_anime.jpg"
+  },
+  {
+    "title": "Blueprint",
+    "full": "images/lechner_lan_blueprint.png",
+    "thumb": "thumbs/lechner_lan_blueprint.jpg",
+    "category": "Other Styles",
+    "filename": "lechner_lan_blueprint.png",
+    "jpg": "jpg/lechner_lan_blueprint.jpg",
+    "jpg_filename": "lechner_lan_blueprint.jpg"
+  },
+  {
+    "title": "Graffiti",
+    "full": "images/lechner_lan_graffiti.png",
+    "thumb": "thumbs/lechner_lan_graffiti.jpg",
+    "category": "Other Styles",
+    "filename": "lechner_lan_graffiti.png",
+    "jpg": "jpg/lechner_lan_graffiti.jpg",
+    "jpg_filename": "lechner_lan_graffiti.jpg"
+  },
+  {
+    "title": "Low Poly",
+    "full": "images/lechner_lan_lowpoly.png",
+    "thumb": "thumbs/lechner_lan_lowpoly.jpg",
+    "category": "Other Styles",
+    "filename": "lechner_lan_lowpoly.png",
+    "jpg": "jpg/lechner_lan_lowpoly.jpg",
+    "jpg_filename": "lechner_lan_lowpoly.jpg"
+  },
+  {
+    "title": "Oil Painting",
+    "full": "images/lechner_lan_oil_painting.png",
+    "thumb": "thumbs/lechner_lan_oil_painting.jpg",
+    "category": "Other Styles",
+    "filename": "lechner_lan_oil_painting.png",
+    "jpg": "jpg/lechner_lan_oil_painting.jpg",
+    "jpg_filename": "lechner_lan_oil_painting.jpg"
+  },
+  {
+    "title": "Pixel",
+    "full": "images/lechner_lan_pixel.png",
+    "thumb": "thumbs/lechner_lan_pixel.jpg",
+    "category": "Other Styles",
+    "filename": "lechner_lan_pixel.png",
+    "jpg": "jpg/lechner_lan_pixel.jpg",
+    "jpg_filename": "lechner_lan_pixel.jpg"
+  },
+  {
+    "title": "Lechner Lan",
+    "full": "images/lechner_lan.png",
+    "thumb": "thumbs/lechner_lan.jpg",
+    "category": "Original",
+    "filename": "lechner_lan.png",
+    "jpg": "jpg/lechner_lan.jpg",
+    "jpg_filename": "lechner_lan.jpg"
+  }
+]
