@@ -1,226 +1,2777 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Lechner LAN — Wallpaper Gallery</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lechner LAN — Bracket Tracker</title>
 <style>
   :root {
-    --bg: #0c0d12;
-    --bg2: #15171f;
-    --ink: #f4f5f7;
-    --muted: #8b8f9a;
-    --accent: #f5c518;
-    --border: #23262e;
+    --bg: #0a1020;
+    --panel: #060b16;
+    --ink: #ffffff;
+    --muted: #93a4c8;
+    --red: #3b82f6;
+    --yellow: #22d3ee;
+    --blue: #a855f7;
+    --border: #ffffff;
+    --card: #101828;
+    --card-hover: #1a2540;
+    --halftone: radial-gradient(circle, rgba(34,211,238,0.09) 1px, transparent 1.5px);
+    --head-font: 'Arial Black','Impact',sans-serif;
+    --body-font: 'Courier New',monospace;
   }
   * { box-sizing: border-box; }
-  html, body { margin: 0; padding: 0; background: var(--bg); color: var(--ink); font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
-  header {
-    padding: 32px 24px 16px;
-    text-align: center;
-    border-bottom: 1px solid var(--border);
-    background: linear-gradient(180deg, #15171f 0%, #0c0d12 100%);
+  body {
+    margin: 0;
+    font-family: var(--body-font, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif);
+    background: var(--bg);
+    background-image: var(--halftone);
+    background-size: 12px 12px;
+    color: var(--ink);
+    padding: 28px 24px;
   }
   h1 {
-    margin: 0 0 6px;
-    font-size: clamp(28px, 4vw, 44px);
-    letter-spacing: 0.02em;
+    text-align: center;
+    font-family: var(--head-font, 'Arial Black', 'Impact', sans-serif);
+    font-weight: 900;
+    letter-spacing: 1px;
     text-transform: uppercase;
-    font-weight: 800;
+    margin: 0 0 4px;
+    font-size: clamp(28px, 4vw, 48px);
+    color: var(--yellow);
+    text-shadow:
+      0 0 8px rgba(34,211,238,0.6),
+      0 0 24px rgba(168,85,247,0.4),
+      3px 3px 0 rgba(59,130,246,0.7);
   }
-  h1 .accent { color: var(--accent); }
-  header p { margin: 0; color: var(--muted); font-size: 14px; }
-  .filters {
-    display: flex; flex-wrap: wrap; justify-content: center; gap: 8px;
-    padding: 16px; border-bottom: 1px solid var(--border); background: var(--bg2);
-    position: sticky; top: 0; z-index: 10;
-  }
-  .filter-btn {
-    background: transparent; color: var(--ink); border: 1px solid var(--border);
-    padding: 6px 14px; border-radius: 999px; font-size: 13px; cursor: pointer;
-    transition: all .15s;
-  }
-  .filter-btn:hover { border-color: var(--accent); }
-  .filter-btn.active { background: var(--accent); color: #111; border-color: var(--accent); font-weight: 600; }
-  .grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-    gap: 14px;
-    padding: 18px;
-    max-width: 1600px; margin: 0 auto;
-  }
-  .card {
-    background: var(--bg2);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    overflow: hidden;
-    cursor: pointer;
-    transition: transform .15s, border-color .15s;
-    aspect-ratio: 16/9;
-    position: relative;
-  }
-  .card:hover { transform: translateY(-2px); border-color: var(--accent); }
-  .card img { display: block; width: 100%; height: 100%; object-fit: cover; }
-  .card .meta {
-    position: absolute; left: 0; right: 0; bottom: 0;
-    padding: 8px 12px;
-    background: linear-gradient(0deg, rgba(0,0,0,.85), transparent);
-    display: flex; justify-content: space-between; align-items: end; gap: 8px;
-  }
-  .card .meta .t { font-size: 13px; font-weight: 600; }
-  .card .meta .c { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: .05em; }
-  footer { padding: 24px; text-align: center; color: var(--muted); font-size: 13px; border-top: 1px solid var(--border); }
-  footer a { color: var(--accent); text-decoration: none; }
-  .download-all {
-    display: inline-block;
-    background: var(--accent);
-    color: #111;
-    border: none;
-    padding: 10px 22px;
-    border-radius: 999px;
+  .sub {
+    text-align: center;
+    color: var(--muted);
+    margin: 0 0 24px;
     font-size: 14px;
-    font-weight: 700;
-    cursor: pointer;
-    text-decoration: none;
-    margin-top: 14px;
-    transition: transform .15s, box-shadow .15s;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    font-weight: 400;
   }
-  .download-all:hover { transform: translateY(-1px); box-shadow: 0 6px 18px rgba(245,197,24,.3); }
 
-  /* Lightbox */
-  .lightbox { position: fixed; inset: 0; background: rgba(0,0,0,.94); display: none; align-items: center; justify-content: center; z-index: 100; padding: 24px; }
-  .lightbox.open { display: flex; }
-  .lightbox img { max-width: 100%; max-height: calc(100vh - 120px); border-radius: 6px; box-shadow: 0 12px 40px rgba(0,0,0,.6); }
-  .lightbox .lb-meta { position: absolute; bottom: 24px; left: 0; right: 0; text-align: center; color: var(--ink); }
-  .lightbox .lb-meta .lb-title { font-size: 15px; font-weight: 600; margin-bottom: 4px; }
-  .lightbox .lb-meta a { color: var(--accent); margin: 0 10px; font-size: 13px; text-decoration: none; }
-  .lightbox .lb-close { position: absolute; top: 16px; right: 20px; background: transparent; border: none; color: var(--ink); font-size: 28px; cursor: pointer; }
-  .lightbox .lb-nav { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(255,255,255,.06); color: var(--ink); border: 1px solid var(--border); width: 44px; height: 44px; border-radius: 50%; cursor: pointer; font-size: 22px; }
-  .lightbox .lb-prev { left: 16px; }
-  .lightbox .lb-next { right: 16px; }
-  .lightbox .lb-nav:hover { background: rgba(255,255,255,.12); }
+  /* SETUP PANEL */
+  .setup {
+    max-width: 560px;
+    margin: 0 auto 28px;
+    background: var(--panel);
+    border: 3px solid var(--border);
+    border-radius: 4px;
+    padding: 22px 26px;
+    position: relative;
+    box-shadow: 4px 4px 0 rgba(0,0,0,0.5);
+  }
+  .setup h2 {
+    margin: 0 0 14px;
+    font-size: 14px;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--yellow);
+    text-shadow: 0 0 6px rgba(34,211,238,0.5);
+    font-family: var(--head-font, 'Arial Black', 'Impact', sans-serif);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .setup-toggle {
+    background: none;
+    border: 2px solid var(--border);
+    border-radius: 3px;
+    color: var(--muted);
+    font-size: 12px;
+    font-weight: 700;
+    padding: 4px 10px;
+    cursor: pointer;
+    font-family: var(--body-font, 'Courier New', monospace);
+    transition: color 0.15s, border-color 0.15s;
+  }
+  .setup-toggle:hover {
+    color: var(--yellow);
+    border-color: var(--yellow);
+  }
+  .setup-details {
+    overflow: hidden;
+    max-height: 2000px;
+    transition: max-height 0.35s ease, opacity 0.25s ease;
+    opacity: 1;
+  }
+  .setup.collapsed .setup-details {
+    max-height: 0;
+    opacity: 0;
+  }
+  .setup.collapsed {
+    padding: 14px 26px;
+  }
+  .setup-row { display: flex; gap: 16px; margin-bottom: 14px; flex-wrap: wrap; }
+  .team-inputs-wrap {
+    margin-top: 14px;
+    border-top: 2px solid var(--border);
+    padding-top: 14px;
+    margin-bottom: 20px;
+  }
+  .team-inputs-wrap label {
+    display: block;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--muted);
+    margin-bottom: 10px;
+    font-weight: 700;
+  }
+  .team-inputs-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 8px;
+  }
+  .team-inputs-grid .pool-group-label {
+    grid-column: 1 / -1;
+    font-size: 11px;
+    letter-spacing: 1px;
+    font-weight: 700;
+    color: var(--yellow);
+    margin-top: 6px;
+    text-transform: uppercase;
+    padding: 4px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .team-inputs-grid input {
+    width: 100%;
+    background: var(--card);
+    border: 2px solid var(--border);
+    border-radius: 4px;
+    color: var(--ink);
+    padding: 10px 14px;
+    font-size: 15px;
+    outline: none;
+    font-family: var(--body-font, 'Courier New', monospace);
+    transition: border-color 0.15s, box-shadow 0.15s;
+  }
+  .team-inputs-grid input:focus {
+    border-color: var(--yellow);
+    box-shadow: 0 0 0 2px rgba(255,214,0,0.25);
+  }
+  .map-setup-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 8px;
+  }
+  .map-setup-grid input {
+    width: 100%;
+    background: var(--card);
+    border: 2px solid var(--border);
+    border-radius: 4px;
+    color: var(--ink);
+    padding: 10px 14px;
+    font-size: 14px;
+    outline: none;
+    font-family: var(--body-font, 'Courier New', monospace);
+    transition: border-color 0.15s, box-shadow 0.15s;
+  }
+  .map-setup-grid input:focus {
+    border-color: var(--yellow);
+    box-shadow: 0 0 0 2px rgba(255,214,0,0.25);
+  }
+  .round-map-display {
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--muted);
+    margin-bottom: 6px;
+    padding: 3px 8px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    display: inline-block;
+    font-family: 'Courier New', monospace;
+    letter-spacing: 0.5px;
+  }
+  .setup-group { flex: 1; min-width: 180px; }
+  .setup-group label {
+    display: block;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--muted);
+    margin-bottom: 5px;
+    font-weight: 700;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  }
+  .setup-group select,
+  .setup-group input {
+    width: 100%;
+    background: var(--card);
+    border: 2px solid var(--border);
+    border-radius: 4px;
+    color: var(--ink);
+    padding: 9px 12px;
+    font-size: 15px;
+    outline: none;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    transition: border-color 0.15s, box-shadow 0.15s;
+  }
+  .setup-group select:focus,
+  .setup-group input:focus {
+    border-color: var(--yellow);
+    box-shadow: 0 0 0 2px rgba(255,214,0,0.25);
+  }
+  .btn {
+    background: var(--yellow);
+    color: #111;
+    border: 3px solid var(--border);
+    border-radius: 4px;
+    padding: 9px 22px;
+    font-size: 14px;
+    font-weight: 900;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: transform 0.1s, box-shadow 0.1s;
+    box-shadow: 3px 3px 0 rgba(0,0,0,0.6);
+    font-family: var(--head-font, 'Arial Black', 'Impact', sans-serif);
+  }
+  .btn:hover {
+    transform: translate(-1px, -1px);
+    box-shadow: 5px 5px 0 rgba(0,0,0,0.6);
+  }
+  .btn:active {
+    transform: translate(1px, 1px);
+    box-shadow: 1px 1px 0 rgba(0,0,0,0.6);
+  }
+  .btn-reset {
+    background: var(--red);
+    color: #fff;
+    margin-left: 12px;
+  }
+
+  /* BRACKET AREA */
+  .bracket-area {
+    width: 100%;
+    max-width: 1600px;
+    margin: 0 auto;
+    background: var(--panel);
+    border: 3px solid var(--border);
+    border-radius: 4px;
+    padding: 24px 28px;
+    position: relative;
+    box-shadow: 5px 5px 0 rgba(0,0,0,0.5);
+  }
+  .bracket-section-label {
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    margin-bottom: 10px;
+    font-weight: 900;
+    display: inline-block;
+    padding: 3px 12px;
+    clip-path: polygon(0 0, 100% 0, calc(100% - 8px) 100%, 0 100%);
+  }
+  .bracket-section-label.winners {
+    color: #fff;
+    background: var(--yellow);
+    text-shadow: 1px 1px 0 rgba(0,0,0,0.4);
+  }
+  .bracket-section-label.losers {
+    color: #fff;
+    background: var(--red);
+    text-shadow: 1px 1px 0 rgba(0,0,0,0.4);
+  }
+  .bracket {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 6px 0;
+  }
+  .bracket.losers-bracket {
+    margin-top: 20px;
+    margin-left: 190px;
+  }
+  .col {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    justify-content: center;
+  }
+  .col-label {
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--muted);
+    margin-bottom: 2px;
+    font-weight: 700;
+    font-family: var(--body-font, 'Courier New', monospace);
+  }
+  .map-input-wrap {
+    margin-bottom: 8px;
+  }
+  .map-input-wrap label {
+    display: block;
+    font-size: 8px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--muted);
+    margin-bottom: 3px;
+    font-weight: 700;
+  }
+  .map-input-wrap input {
+    width: 100%;
+    min-width: 140px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    color: var(--ink);
+    padding: 5px 8px;
+    font-size: 11px;
+    outline: none;
+    font-family: var(--body-font, 'Courier New', monospace);
+    transition: border-color 0.15s, box-shadow 0.15s;
+  }
+  .map-input-wrap input:focus {
+    border-color: var(--yellow);
+    box-shadow: 0 0 0 2px rgba(34,211,238,0.2);
+  }
+  .match {
+    background: var(--card);
+    border: 2px solid var(--border);
+    border-radius: 3px;
+    padding: 8px 10px;
+    min-width: 160px;
+    font-size: 13px;
+    cursor: pointer;
+    transition: transform 0.1s, box-shadow 0.1s;
+    position: relative;
+    box-shadow: 3px 3px 0 rgba(0,0,0,0.4);
+  }
+  .match:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 5px 5px 0 rgba(0,0,0,0.5);
+    border-color: var(--yellow);
+  }
+  .match .row {
+    display: flex;
+    justify-content: space-between;
+    padding: 4px 6px;
+    border-radius: 2px;
+    margin: 1px 0;
+  }
+  .match .row .team {
+    font-weight: 700;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  }
+  .match .row .server {
+    color: var(--muted);
+    font-size: 10px;
+    font-family: 'Consolas', 'SF Mono', monospace;
+  }
+  .match .row.winner {
+    background: linear-gradient(90deg, rgba(255,214,0,0.15), transparent);
+    border-left: 3px solid var(--yellow);
+  }
+  .match .row.winner .team { color: var(--yellow); }
+  .match .row.pending { color: #555570; font-style: italic; }
+  .match .round-tag {
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: #555570;
+    margin-bottom: 4px;
+  }
+  .status-dot {
+    position: absolute;
+    top: 8px;
+    right: 10px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    border: 1px solid rgba(0,0,0,0.3);
+  }
+  .status-dot.scheduled { background: #555570; }
+  .status-dot.recorded { background: var(--yellow); }
+  .arrow {
+    align-self: center;
+    color: var(--muted);
+    font-size: 18px;
+    font-weight: 900;
+  }
+  .flow {
+    text-align: center;
+    color: var(--muted);
+    font-size: 14px;
+    margin: 10px 0;
+    font-weight: 700;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  }
+  .grand-final-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    min-width: 160px;
+    padding: 14px;
+    background: rgba(255,214,0,0.05);
+    border: 3px solid var(--yellow);
+    border-radius: 4px;
+    position: relative;
+    box-shadow: 4px 4px 0 rgba(0,0,0,0.5);
+  }
+  .grand-final-wrap::before {
+    content: "⚡";
+    position: absolute;
+    top: -14px;
+    right: -10px;
+    font-size: 28px;
+    filter: drop-shadow(2px 2px 0 rgba(0,0,0,0.5));
+  }
+  .grand-final-wrap .gf-note {
+    font-size: 10px;
+    color: var(--muted);
+    max-width: 200px;
+    line-height: 1.4;
+    text-align: center;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    font-weight: 400;
+  }
+  .grand-final-wrap .gf-note strong { color: var(--yellow); }
+  .bracket-main {
+    display: flex;
+    gap: 28px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  .bracket-stack {
+    flex: 1 1 550px;
+    min-width: 0;
+  }
+  .bracket-main .bracket-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+  .winner-banner {
+    text-align: center;
+    margin-top: 6px;
+    font-size: 18px;
+    color: var(--yellow);
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    text-shadow: 2px 2px 0 var(--red);
+  }
+  .winner-banner .trophy { font-size: 22px; margin-right: 5px; }
+  .final-match {
+    border: 3px solid var(--yellow);
+    background: linear-gradient(135deg, var(--card), #2a2a10);
+  }
+  .final-match .round-tag { color: var(--yellow); }
+  .bye {
+    background: rgba(230,48,48,0.08);
+    border-left: 3px solid var(--red);
+  }
+  .bye .team { color: var(--red); }
+
+  /* POOL PLAY */
+  .pool-phase {
+    margin-bottom: 32px;
+  }
+  .pool-phase-title {
+    font-family: var(--head-font, 'Arial Black', 'Impact', sans-serif);
+    font-size: 16px;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--yellow);
+    text-shadow: 0 0 6px rgba(34,211,238,0.5);
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid var(--border);
+  }
+  .pool-groups {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+  }
+  .pool-group {
+    background: var(--card);
+    border: 2px solid var(--border);
+    border-radius: 4px;
+    padding: 14px 16px;
+    min-width: 240px;
+    flex: 1 1 240px;
+    box-shadow: 3px 3px 0 rgba(0,0,0,0.4);
+  }
+  .pool-group-title {
+    font-family: var(--head-font, 'Arial Black', 'Impact', sans-serif);
+    font-size: 12px;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--yellow);
+    margin-bottom: 10px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid var(--border);
+  }
+  .pool-standings-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 12px;
+  }
+  .pool-standings-table th {
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--muted);
+    font-weight: 700;
+    padding: 4px 6px;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+  }
+  .pool-standings-table td {
+    padding: 5px 6px;
+    font-size: 12px;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+  }
+  .pool-standings-table .rank {
+    font-weight: 900;
+    color: var(--yellow);
+    width: 24px;
+  }
+  .pool-standings-table .team-name {
+    font-weight: 700;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  }
+  .pool-standings-table .pts {
+    text-align: right;
+    font-weight: 900;
+    color: var(--yellow);
+  }
+  .pool-standings-table tr.qualified .team-name {
+    color: var(--yellow);
+  }
+  .pool-standings-table tr.qualified {
+    background: rgba(34,211,238,0.06);
+  }
+  .pool-matches {
+    margin-top: 8px;
+  }
+  .pool-matches-label {
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--muted);
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+  .pool-match-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 5px 8px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    margin-bottom: 4px;
+    font-size: 12px;
+    cursor: pointer;
+    transition: border-color 0.15s, transform 0.1s;
+  }
+  .pool-match-row:hover {
+    border-color: var(--yellow);
+    transform: translate(-1px, -1px);
+  }
+  .pool-match-row .pm-team {
+    font-weight: 700;
+    flex: 1;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  }
+  .pool-match-row .pm-team.winner {
+    color: var(--yellow);
+  }
+  .pool-match-row .pm-score {
+    font-weight: 900;
+    color: var(--muted);
+    min-width: 28px;
+    text-align: center;
+    font-size: 11px;
+  }
+  .pool-match-row .pm-score.has-result {
+    color: var(--yellow);
+  }
+  .pool-divider {
+    text-align: center;
+    color: var(--muted);
+    font-size: 13px;
+    font-weight: 700;
+    margin: 20px 0;
+    padding: 10px;
+    border: 2px dashed var(--border);
+    border-radius: 4px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  }
+  .pool-divider strong {
+    color: var(--yellow);
+  }
+
+  /* MODAL */
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.8);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+  }
+  .modal-overlay.active { display: flex; }
+  .modal {
+    background: var(--panel);
+    border: 3px solid var(--border);
+    border-radius: 4px;
+    padding: 22px 26px;
+    min-width: 380px;
+    max-width: 460px;
+    box-shadow: 6px 6px 0 rgba(0,0,0,0.6);
+  }
+  .tabs {
+    display: flex;
+    gap: 0;
+    margin-bottom: 14px;
+    border-bottom: 2px solid var(--border);
+  }
+  .tab {
+    padding: 7px 16px;
+    font-size: 12px;
+    font-weight: 900;
+    color: var(--muted);
+    cursor: pointer;
+    border-bottom: 3px solid transparent;
+    transition: color 0.15s, border-color 0.15s;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  .tab.active {
+    color: var(--yellow);
+    border-bottom-color: var(--yellow);
+  }
+  .tab:hover { color: var(--ink); }
+  .tab-content { display: none; }
+  .tab-content.active { display: block; }
+  .modal label {
+    display: block;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--muted);
+    margin-bottom: 4px;
+    font-weight: 700;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  }
+  .modal input,
+  .modal select {
+    width: 100%;
+    background: var(--card);
+    border: 2px solid var(--border);
+    border-radius: 3px;
+    color: var(--ink);
+    padding: 8px 10px;
+    font-size: 14px;
+    outline: none;
+    margin-bottom: 10px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    transition: border-color 0.15s, box-shadow 0.15s;
+  }
+  .modal input:focus,
+  .modal select:focus {
+    border-color: var(--yellow);
+    box-shadow: 0 0 0 2px rgba(255,214,0,0.2);
+  }
+  .modal-actions {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+    margin-top: 14px;
+  }
+  .modal-actions button {
+    padding: 7px 18px;
+    border-radius: 3px;
+    border: 2px solid var(--border);
+    font-size: 12px;
+    font-weight: 900;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: transform 0.1s, box-shadow 0.1s;
+    box-shadow: 2px 2px 0 rgba(0,0,0,0.5);
+    font-family: var(--head-font, 'Arial Black', 'Impact', sans-serif);
+  }
+  .modal-actions button:active {
+    transform: translate(1px, 1px);
+    box-shadow: 0 0 0 rgba(0,0,0,0.5);
+  }
+  .modal-actions .cancel {
+    background: var(--card);
+    color: var(--ink);
+  }
+  .modal-actions .confirm {
+    background: var(--yellow);
+    color: #111;
+  }
+
+  /* SITE NAV */
+  .site-nav {
+    display: flex;
+    justify-content: center;
+    gap: 14px;
+    padding: 10px 0 18px;
+    margin: 0 auto 20px;
+    max-width: 900px;
+    border-bottom: 3px solid var(--border);
+  }
+  .site-nav a {
+    font-family: var(--head-font, 'Arial Black', 'Impact', sans-serif);
+    font-weight: 900;
+    text-transform: uppercase;
+    font-size: 14px;
+    letter-spacing: 1px;
+    text-decoration: none;
+    color: var(--muted);
+    padding: 6px 16px;
+    border: 2px solid transparent;
+    border-radius: 3px;
+    transition: color 0.15s, border-color 0.15s;
+  }
+  .site-nav a:hover {
+    color: var(--yellow);
+  }
+  .site-nav a.active {
+    color: var(--yellow);
+    border-color: var(--yellow);
+    background: rgba(34,211,238,0.08);
+  }
+
 </style>
 </head>
 <body>
-<header>
-  <h1>Lechner <span class="accent">LAN</span></h1>
-  <p id="count">Loading…</p>
-  <a class="download-all" href="lechner-lan-wallpapers.zip" download>⬇ Download all (JPG · 39 MB)</a>
-</header>
 
-<div class="filters" id="filters"></div>
-<div class="grid" id="grid"></div>
+<div class="site-nav">
+  <a href="/" class="active">Bracket Tracker</a>
+  <a href="/backgrounds/">Wallpaper Gallery</a>
+</div>
 
-<footer>
-  Generated wallpapers · 1920×1080 · click any tile to view full size · <a href="https://github.com/nic-dryrun/lechner-lan" target="_blank" rel="noopener">repo</a>
-</footer>
+<h1>⚡ Lechner LAN ⚡</h1>
 
-<!-- TEST -->
+<div class="setup" id="setupPanel">
+  <h2>Tournament Setup <button class="setup-toggle" id="setupToggle" onclick="toggleSetup()">Hide ▲</button></h2>
+  <div class="setup-details" id="setupDetails">
+  <div class="setup-row">
+    <div class="setup-group">
+      <label>Number of Participants</label>
+      <select id="participantCount">
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4" selected>4</option>
+        <option value="5">5</option>
+        <option value="6">6</option>
+        <option value="7">7</option>
+        <option value="8">8</option>
+        <option value="9">9</option>
+        <option value="10">10</option>
+        <option value="11">11</option>
+        <option value="12">12</option>
+        <option value="13">13</option>
+        <option value="14">14</option>
+        <option value="15">15</option>
+        <option value="16">16</option>
+        <option value="17">17</option>
+        <option value="18">18</option>
+        <option value="19">19</option>
+        <option value="20">20</option>
+        <option value="21">21</option>
+        <option value="22">22</option>
+        <option value="23">23</option>
+        <option value="24">24</option>
+        <option value="25">25</option>
+        <option value="26">26</option>
+        <option value="27">27</option>
+        <option value="28">28</option>
+        <option value="29">29</option>
+        <option value="30">30</option>
+        <option value="31">31</option>
+        <option value="32">32</option>
+      </select>
+    </div>
+    <div class="setup-group">
+      <label>Format</label>
+      <select id="tournamentFormat">
+        <option value="single" selected>Single Elimination</option>
+        <option value="double">Double Elimination</option>
+        <option value="pool">Pool Play (Round-Robin)</option>
+      </select>
+    </div>
+    <div class="setup-group" id="poolSizeGroup" style="display:none;">
+      <label>Teams per Pool</label>
+      <select id="poolSize">
+        <option value="3">3</option>
+        <option value="4" selected>4</option>
+        <option value="5" selected>5</option>
+        <option value="6">6</option>
+        <option value="7">7</option>
+        <option value="8">8</option>
+      </select>
+    </div>
+  </div>
+  <div class="team-inputs-wrap" id="teamInputsWrap">
+    <label>Team Names (optional — enter now or add later via the bracket)</label>
+    <div class="team-inputs-grid" id="teamInputsGrid"></div>
+  </div>
+  <div class="team-inputs-wrap" id="mapInputsWrap">
+    <label>Maps per Round (optional)</label>
+    <div class="map-setup-grid" id="mapInputsGrid"></div>
+  </div>
+  <button class="btn" id="startBtn">Start Tournament</button>
+  <button class="btn btn-reset" id="resetBtn">Reset</button>
+  </div>
+</div>
 
-<div class="lightbox" id="lightbox" role="dialog" aria-modal="true">
-  <button class="lb-close" id="lbClose" aria-label="Close">×</button>
-  <button class="lb-nav lb-prev" id="lbPrev" aria-label="Previous">‹</button>
-  <img id="lbImg" alt="">
-  <button class="lb-nav lb-next" id="lbNext" aria-label="Next">›</button>
-  <div class="lb-meta">
-    <div class="lb-title" id="lbTitle"></div>
-    <div>
-      <a id="lbDownload" download>Download JPG (1920×1080)</a>
-      <a id="lbDownloadPng" download>Download PNG</a>
-      <a id="lbOpen" target="_blank" rel="noopener">Open in new tab</a>
+<div class="bracket-area" id="bracketArea" style="display: none;">
+  <div id="bracketContent"></div>
+</div>
+
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal">
+    <div class="tabs">
+      <div class="tab active" id="tabSet" onclick="switchTab('set')">Set Match</div>
+      <div class="tab" id="tabResult" onclick="switchTab('result')">Record Result</div>
+    </div>
+
+    <div class="tab-content active" id="contentSet">
+      <label>Team 1</label>
+      <input type="text" id="team1Input" placeholder="Enter team name">
+      <label>Team 2</label>
+      <input type="text" id="team2Input" placeholder="Enter team name">
+      <label>Server</label>
+      <input type="text" id="serverInput" placeholder="e.g. Server 1, Local, etc.">
+      <div class="modal-actions">
+        <button class="cancel" onclick="closeModal()">Cancel</button>
+        <button class="confirm" onclick="saveMatch()">Save Match</button>
+      </div>
+    </div>
+
+    <div class="tab-content" id="contentResult">
+      <label>Winner</label>
+      <select id="winnerInput">
+        <option value="">Select winner...</option>
+      </select>
+      <div id="poolScoreWrap" style="display:none; margin-top:10px;">
+        <div style="display:flex; gap:10px;">
+          <div style="flex:1;">
+            <label>Score (Team 1)</label>
+            <input type="number" id="poolScore1" min="0" style="width:100%; background:var(--card); border:1px solid var(--border); border-radius:3px; color:var(--ink); padding:6px 8px; font-size:13px; outline:none; font-family:var(--body-font);">
+          </div>
+          <div style="flex:1;">
+            <label>Score (Team 2)</label>
+            <input type="number" id="poolScore2" min="0" style="width:100%; background:var(--card); border:1px solid var(--border); border-radius:3px; color:var(--ink); padding:6px 8px; font-size:13px; outline:none; font-family:var(--body-font);">
+          </div>
+        </div>
+      </div>
+      <div class="modal-actions">
+        <button class="cancel" onclick="closeModal()">Cancel</button>
+        <button class="confirm" onclick="saveResult()">Save Result</button>
+      </div>
     </div>
   </div>
 </div>
 
 <script>
-let items = [];
-let activeFilter = "All";
-let activeIndex = -1;
+let tournament = null;
+let currentMatchId = null;
 
-const grid = document.getElementById("grid");
-const filtersEl = document.getElementById("filters");
-const countEl = document.getElementById("count");
-const lb = document.getElementById("lightbox");
-const lbImg = document.getElementById("lbImg");
-const lbTitle = document.getElementById("lbTitle");
-const lbDownload = document.getElementById("lbDownload");
-const lbDownloadPng = document.getElementById("lbDownloadPng");
-const lbOpen = document.getElementById("lbOpen");
+function nextPowerOf2(n) {
+  let p = 1;
+  while (p < n) p *= 2;
+  return p;
+}
 
-fetch("gallery.json").then(r => r.json()).then(data => {
-  items = data;
-  buildFilters();
-  render();
-});
+/**
+ * Computes the preliminary round structure for a non-power-of-2 tournament.
+ *
+ * For playerCount not a power of 2, we want a "preliminary" round of real
+ * matches that feeds into the main winners bracket. The main bracket size
+ * is chosen as the smallest power of 2 that is >= playerCount AND has at
+ * least 2 slots (so 3 players -> 4, 5..8 -> 8, 9..16 -> 16, etc).
+ *
+ * For a 9-person double-elim (reference layout):
+ *   - main bracket size = 8 (4 matches in Winners R1)
+ *   - 9 - 4 = 5 overflow teams
+ *   - 4 of them play 2 prelim matches; 1 goes directly into a Winners R1 slot
+ *
+ * General rule:
+ *   mainSize  = largest power of 2 strictly less than nextPowerOf2(playerCount)
+ *   mainR1    = mainSize / 2
+ *   overflow  = playerCount - mainR1
+ *   prelimMatches = floor(overflow / 2)
+ *   directTeams = overflow - 2 * prelimMatches  (0 or 1)
+ *
+ * If mainSize would be < 2 (playerCount = 3), fall back to no prelim:
+ *   mainSize = 4, mainR1 = 2, overflow = 1, prelimMatches = 0, directTeams = 1.
+ *
+ * Returns an object:
+ *   { hasPrelim, mainSize, mainR1, prelimMatches, directTeams, overflow }
+ *   where hasPrelim = prelimMatches > 0.
+ */
+function computePrelim(playerCount) {
+  const p2 = nextPowerOf2(playerCount);
+  // If playerCount is itself a power of 2, no prelim needed.
+  if (p2 === playerCount) {
+    return { hasPrelim: false, mainSize: playerCount, mainR1: playerCount / 2,
+             prelimMatches: 0, directTeams: 0, overflow: 0 };
+  }
+  // directTeams: 1 if odd player count, 0 if even
+  const directTeams = playerCount % 2;
+  // prelimMatches: the overflow teams play real matches
+  const overflow = playerCount - directTeams;
+  const prelimMatches = overflow / 2;
+  // mainSize: the main bracket is sized to fit the advancing teams
+  // Advancing teams = prelimMatches (winners) + directTeams
+  const advancing = prelimMatches + directTeams;
+  const mainSize = nextPowerOf2(advancing);
+  const mainR1 = mainSize / 2;
+  return { hasPrelim: true, mainSize, mainR1, prelimMatches,
+           directTeams, overflow };
+}
 
-function buildFilters() {
-  const cats = ["All", ...Array.from(new Set(items.map(i => i.category)))];
-  filtersEl.innerHTML = cats.map(c =>
-    `<button class="filter-btn ${c === activeFilter ? "active" : ""}" data-cat="${c}">${c}</button>`
-  ).join("");
-  filtersEl.querySelectorAll(".filter-btn").forEach(b => {
-    b.addEventListener("click", () => {
-      activeFilter = b.dataset.cat;
-      buildFilters();
-      render();
+function generateBracket(playerCount, format, teamNames) {
+  const prelim = computePrelim(playerCount);
+  const bracketSize = prelim.mainSize; // main winners bracket size (power of 2)
+  const byes = 0; // no BYE tokens in the structural approach
+  const rounds = Math.log2(bracketSize); // number of winners rounds (main)
+
+  // Helper: make a match object
+  function mk(id, round, extra) {
+    const m = { id, round, team1: null, team2: null, winner: null, server: null };
+    if (extra) Object.assign(m, extra);
+    return m;
+  }
+
+  // Shuffle teams (if any provided)
+  const teams = (teamNames && teamNames.length > 0) ? shuffleArray([...teamNames]) : [];
+
+  if (format === 'single') {
+    // Single-elimination:
+    //   - If no prelim: standard power-of-2 bracket (bracketSize matches, R1..Final)
+    //   - If prelim: a leftmost "Prelim" column of `prelimMatches` real matches,
+    //     then main R1 (mainR1 matches), then R2..Final.
+    //   - directTeams go straight into main R1 slots (marked as 'BYE' auto-advance
+    //     so they advance to R2 without playing R1).
+
+    const matches = [];
+    let matchId = 0;
+
+    if (!prelim.hasPrelim) {
+      // Standard power-of-2 single-elim bracket
+      for (let round = 0; round < rounds; round++) {
+        const numMatchesInRound = Math.pow(2, rounds - 1 - round);
+        for (let mIdx = 0; mIdx < numMatchesInRound; mIdx++) {
+          matches.push(mk(`S-${matchId}`, round));
+          matchId++;
+        }
+      }
+      // Fill R1 with teams
+      const r1Matches = matches.filter(m => m.round === 0);
+      for (let i = 0; i < r1Matches.length; i++) {
+        r1Matches[i].team1 = teams[i * 2] || null;
+        r1Matches[i].team2 = teams[i * 2 + 1] || null;
+      }
+    } else {
+      // With prelim: round 0 = Prelim, rounds 1..rounds = main R1..Final
+      // Total rounds = rounds + 1
+      const totalRounds = rounds + 1;
+      // Prelim round: prelimMatches matches
+      for (let mIdx = 0; mIdx < prelim.prelimMatches; mIdx++) {
+        matches.push(mk(`S-${matchId}`, 0, { isPrelim: true }));
+        matchId++;
+      }
+      // Main R1 (round 1): mainR1 matches
+      for (let mIdx = 0; mIdx < prelim.mainR1; mIdx++) {
+        matches.push(mk(`S-${matchId}`, 1));
+        matchId++;
+      }
+      // Main R2..Final (rounds 2..totalRounds-1)
+      for (let round = 2; round < totalRounds; round++) {
+        // Number of matches in this round = mainR1 / 2^(round-1)
+        const numMatchesInRound = Math.floor(prelim.mainR1 / Math.pow(2, round - 1));
+        for (let mIdx = 0; mIdx < numMatchesInRound; mIdx++) {
+          matches.push(mk(`S-${matchId}`, round));
+          matchId++;
+        }
+      }
+
+      // Assign teams:
+      //   - Prelim matches: 2 * prelimMatches teams (real teams)
+      //   - Main R1: directTeams get 'BYE' (auto-advance), rest are empty (filled by prelim winners)
+      const prelimTeams = 2 * prelim.prelimMatches;
+      const totalRealTeams = prelimTeams + prelim.directTeams;
+
+      let teamPtr = 0;
+      // Fill prelim matches
+      const prelimMatchesArr = matches.filter(m => m.round === 0 && m.isPrelim);
+      for (let i = 0; i < prelimMatchesArr.length; i++) {
+        prelimMatchesArr[i].team1 = teams[teamPtr++] || null;
+        prelimMatchesArr[i].team2 = teams[teamPtr++] || null;
+      }
+      // Fill main R1: directTeams get 'BYE' (auto-advance), rest stay empty
+      const mainR1MatchesArr = matches.filter(m => m.round === 1);
+      let r1Slot = 0;
+      for (let d = 0; d < prelim.directTeams; d++) {
+        mainR1MatchesArr[r1Slot].team1 = teams[teamPtr++] || null;
+        mainR1MatchesArr[r1Slot].team2 = 'BYE';
+        mainR1MatchesArr[r1Slot].winner = mainR1MatchesArr[r1Slot].team1 || null;
+        r1Slot++;
+      }
+      // Remaining R1 slots stay null (filled by prelim winners at runtime)
+    }
+
+    return {
+      type: 'single',
+      matches,
+      byes,
+      bracketSize,
+      playerCount,
+      prelim,
+      totalRounds: prelim.hasPrelim ? rounds + 1 : rounds
+    };
+  }
+
+  // ===== DOUBLE ELIMINATION =====
+  const matches = { winners: [], losers: [] };
+  let wId = 0, lId = 0;
+
+  if (!prelim.hasPrelim) {
+    // Standard power-of-2 double-elim
+    for (let round = 0; round < rounds; round++) {
+      const numMatchesInRound = Math.pow(2, rounds - 1 - round);
+      for (let mIdx = 0; mIdx < numMatchesInRound; mIdx++) {
+        matches.winners.push(mk(`W-${wId}`, round));
+        wId++;
+      }
+    }
+    // Fill winners R1
+    const wR1 = matches.winners.filter(m => m.round === 0);
+    for (let i = 0; i < wR1.length; i++) {
+      wR1[i].team1 = teams[i * 2] || null;
+      wR1[i].team2 = teams[i * 2 + 1] || null;
+    }
+    // Losers bracket
+    const losersR1Count = Math.floor(bracketSize / 4);
+    for (let mIdx = 0; mIdx < losersR1Count; mIdx++) {
+      matches.losers.push(mk(`L-${lId}`, 0));
+      lId++;
+    }
+    for (let round = 1; round < rounds; round++) {
+      const numMatches = Math.pow(2, rounds - 1 - round);
+      for (let mIdx = 0; mIdx < numMatches; mIdx++) {
+        matches.losers.push(mk(`L-${lId}`, round));
+        lId++;
+      }
+    }
+    if (bracketSize <= 8) {
+      matches.losers.push(mk(`L-${lId}`, rounds));
+      lId++;
+    }
+  } else {
+    // With prelim:
+    //   - Winners round 0 = Prelim (prelimMatches matches)
+    //   - Winners round 1 = Main R1 (mainR1 matches, with directTeams as BYE)
+    //   - Winners round 2..rounds = Main R2..Final
+    //   - Losers: standard losers bracket for `bracketSize` slots,
+    //     but W-R0 (prelim) losers do NOT drop into losers (they're eliminated in prelim
+    //     for double-elim? No — in double-elim they should drop into losers.)
+    //
+    // For simplicity and to match the reference screenshot (which shows prelim
+    // losers going into the losers bracket), we'll:
+    //   - Prelim losers drop into Losers R1 (the first losers round)
+    //   - Main R1 losers drop into Losers R1 as well
+    //
+    // Actually, looking at the reference screenshot more carefully:
+    //   - The 4 prelim matches feed into Winners R2 (4 slots)
+    //   - The 1 direct team also feeds into Winners R2 (1 slot)
+    //   - So Winners R2 has 5 teams? No, that doesn't work for a standard bracket.
+    //
+    // Let me re-examine the reference: 9-team double elim
+    //   - 4 prelim matches (8 teams) -> 4 winners
+    //   - 1 team direct bye
+    //   - Winners R2: 4 matches (8 slots) -> 4 winners from prelim + 4 direct? No.
+    //
+    // Actually the reference shows:
+    //   - Prelim: 4 matches (matches 1-4 in the image)
+    //   - Winners R2: matches 9, 10, 13, 16 (4 matches)
+    //   - So 4 prelim winners + 1 direct = 5 teams feeding into 4 R2 matches?
+    //   - That means one R2 match has a BYE.
+    //
+    // Let me use a simpler approach: treat the prelim as an extra round that
+    // feeds into the standard main R1. The main R1 has mainR1 matches, and
+    // some of its slots are filled by prelim winners, others by direct teams.
+    //
+    // For 9 teams: mainR1 = 4, prelimMatches = 2, directTeams = 1
+    //   - 2 prelim matches -> 2 winners
+    //   - 1 direct team
+    //   - Main R1: 4 matches. 2 slots get prelim winners, 1 slot gets direct team,
+    //     1 slot is empty (BYE).
+    //
+    // Wait, that's only 3 teams for 4 R1 matches. That doesn't work.
+    //
+    // Let me reconsider. The reference screenshot for 9-team double elim shows:
+    //   - 4 prelim matches (leftmost column)
+    //   - 1 team with a direct line to Winners R2
+    //   - Winners R2: 4 matches
+    //   - So 4 prelim winners + 1 direct = 5 teams in 4 R2 matches?
+    //   - No, that's 5 teams for 4 matches. One match must have a BYE.
+    //
+    // Actually, I think the correct interpretation is:
+    //   - Prelim: 4 matches (8 teams) -> 4 winners
+    //   - Direct: 1 team
+    //   - Winners R2: 4 matches. The 4 prelim winners fill 4 slots, and the
+    //     1 direct team fills 1 slot, leaving 1 slot as BYE.
+    //   - But 4 matches * 2 = 8 slots, and we have 5 teams. So 3 slots are BYE.
+    //
+    // This is getting complicated. Let me use a simpler generalization:
+    //   - The prelim round is just an extra column of matches.
+    //   - Prelim winners feed into the FIRST main winners round (R1).
+    //   - Direct teams also feed into R1.
+    //   - R1 has mainR1 matches. The number of teams feeding into R1 is:
+    //     prelimMatches (winners) + directTeams = mainR1 - (mainR1 - prelimMatches - directTeams)
+    //   - For 9 teams: prelimMatches=2, directTeams=1, mainR1=4
+    //     So 2+1=3 teams feed into 4 R1 matches. 1 slot is BYE.
+    //
+    // This is actually the same as the BYE approach, but with a structural
+    // prelim column instead of BYE tokens scattered around.
+    //
+    // Let me just implement it as:
+    //   - Prelim round: prelimMatches matches (real teams)
+    //   - Main R1: mainR1 matches. Some slots filled by prelim winners,
+    //     some by direct teams, some BYE.
+    //   - Main R2..Final: standard
+    //   - Losers: standard for bracketSize slots
+
+    // Winners: round 0 = Prelim, round 1 = Main R1, round 2..rounds = Main R2..Final
+    const totalWRounds = rounds + 1; // prelim + main rounds
+
+    // Prelim round (round 0)
+    for (let mIdx = 0; mIdx < prelim.prelimMatches; mIdx++) {
+      matches.winners.push(mk(`W-${wId}`, 0, { isPrelim: true }));
+      wId++;
+    }
+    // Main R1 (round 1)
+    for (let mIdx = 0; mIdx < prelim.mainR1; mIdx++) {
+      matches.winners.push(mk(`W-${wId}`, 1));
+      wId++;
+    }
+    // Main R2..Final (rounds 2..totalWRounds-1)
+    for (let round = 2; round < totalWRounds; round++) {
+      const numMatchesInRound = Math.floor(prelim.mainR1 / Math.pow(2, round - 1));
+      for (let mIdx = 0; mIdx < numMatchesInRound; mIdx++) {
+        matches.winners.push(mk(`W-${wId}`, round));
+        wId++;
+      }
+    }
+
+    // Assign teams to prelim and main R1
+    let teamPtr = 0;
+    const prelimMatchesArr = matches.winners.filter(m => m.round === 0 && m.isPrelim);
+    for (let i = 0; i < prelimMatchesArr.length; i++) {
+      prelimMatchesArr[i].team1 = teams[teamPtr++] || null;
+      prelimMatchesArr[i].team2 = teams[teamPtr++] || null;
+    }
+    // Main R1: direct teams get BYE (auto-advance), rest stay empty (filled by prelim winners)
+    const mainR1MatchesArr = matches.winners.filter(m => m.round === 1);
+    let r1Slot = 0;
+    for (let d = 0; d < prelim.directTeams; d++) {
+      mainR1MatchesArr[r1Slot].team1 = teams[teamPtr++] || null;
+      mainR1MatchesArr[r1Slot].team2 = 'BYE';
+      mainR1MatchesArr[r1Slot].winner = mainR1MatchesArr[r1Slot].team1 || null;
+      r1Slot++;
+    }
+    // Remaining R1 slots stay null (filled by prelim winners at runtime)
+
+    // Losers bracket: standard for bracketSize
+    const losersR1Count = Math.floor(bracketSize / 4);
+    for (let mIdx = 0; mIdx < losersR1Count; mIdx++) {
+      matches.losers.push(mk(`L-${lId}`, 0));
+      lId++;
+    }
+    for (let round = 1; round < rounds; round++) {
+      const numMatches = Math.pow(2, rounds - 1 - round);
+      for (let mIdx = 0; mIdx < numMatches; mIdx++) {
+        matches.losers.push(mk(`L-${lId}`, round));
+        lId++;
+      }
+    }
+    if (bracketSize <= 8) {
+      matches.losers.push(mk(`L-${lId}`, rounds));
+      lId++;
+    }
+  }
+
+  return {
+    type: 'double',
+    matches,
+    byes,
+    bracketSize,
+    playerCount,
+    prelim,
+    totalRounds: prelim.hasPrelim ? rounds + 1 : rounds,
+    grandFinal: { id: 'GF', team1: null, team2: null, winner: null, server: null }
+  };
+}
+
+// ===== POOL PLAY FUNCTIONS =====
+
+/**
+ * Generate pool-play structure:
+ * - Divide teams into pools of `poolSize`
+ * - Each pool is a round-robin: every team plays every other team once
+ * - Points: win = 2, loss = 0 (standard GSL-style)
+ * - Top N from each pool advance to the bracket
+ *
+ * Returns tournament object with type 'pool', pools, and bracket (generated on demand)
+ */
+function generatePoolTournament(playerCount, poolSize, teamNames) {
+  const teams = (teamNames && teamNames.length > 0) ? shuffleArray([...teamNames]) : [];
+  const numPools = Math.ceil(playerCount / poolSize);
+  const pools = [];
+  let teamPtr = 0;
+
+  for (let p = 0; p < numPools; p++) {
+    const poolTeams = [];
+    for (let t = 0; t < poolSize; t++) {
+      if (teamPtr < teams.length) {
+        poolTeams.push(teams[teamPtr++]);
+      } else {
+        poolTeams.push(null); // BYE slot for incomplete pool
+      }
+    }
+    // Generate all pairwise matches
+    const matches = [];
+    let mId = 0;
+    const realTeams = poolTeams.filter(t => t !== null);
+    for (let i = 0; i < realTeams.length; i++) {
+      for (let j = i + 1; j < realTeams.length; j++) {
+        matches.push({
+          id: `P${p}-M${mId}`,
+          pool: p,
+          team1: realTeams[i],
+          team2: realTeams[j],
+          winner: null,
+          score1: null,
+          score2: null,
+          server: null
+        });
+        mId++;
+      }
+    }
+    pools.push({
+      id: p,
+      teams: poolTeams,
+      realTeams: realTeams,
+      matches
     });
+  }
+
+  return {
+    type: 'pool',
+    poolSize,
+    pools,
+    playerCount,
+    bracket: null, // generated when pools complete
+    roundMaps: {}
+  };
+}
+
+/**
+ * Compute standings for a pool from its matches.
+ * Returns array of { team, wins, losses, points, diff } sorted by points desc.
+ */
+function computePoolStandings(pool) {
+  const stats = {};
+  // Include teams from realTeams and from matches (in case names were added later)
+  pool.realTeams.forEach(t => {
+    if (t) stats[t] = { team: t, wins: 0, losses: 0, points: 0, diff: 0 };
+  });
+  pool.matches.forEach(m => {
+    if (m.team1 && !stats[m.team1]) stats[m.team1] = { team: m.team1, wins: 0, losses: 0, points: 0, diff: 0 };
+    if (m.team2 && !stats[m.team2]) stats[m.team2] = { team: m.team2, wins: 0, losses: 0, points: 0, diff: 0 };
+  });
+
+  pool.matches.forEach(m => {
+    if (!m.winner) return;
+    const loser = m.winner === m.team1 ? m.team2 : m.team1;
+    if (stats[m.winner]) stats[m.winner].wins++;
+    if (stats[loser]) stats[loser].losses++;
+    if (m.score1 !== null && m.score2 !== null) {
+      const diff1 = m.score1 - m.score2;
+      const diff2 = m.score2 - m.score1;
+      if (stats[m.winner]) stats[m.winner].diff += diff1;
+      if (stats[loser]) stats[loser].diff += diff2;
+    }
+  });
+
+  Object.values(stats).forEach(s => { s.points = s.wins * 2; });
+
+  return Object.values(stats).sort((a, b) => {
+    if (b.points !== a.points) return b.points - a.points;
+    if (b.diff !== a.diff) return b.diff - a.diff;
+    return a.team.localeCompare(b.team);
   });
 }
 
-function visibleItems() {
-  return activeFilter === "All" ? items : items.filter(i => i.category === activeFilter);
+/**
+ * Check if all pool matches are complete (all have winners).
+ */
+function poolsComplete() {
+  // Must have at least one real team to be "complete"
+  const totalRealTeams = tournament.pools.reduce((s, p) => s + p.realTeams.length, 0);
+  if (totalRealTeams === 0) return false;
+  return tournament.pools.every(pool =>
+    pool.matches.every(m => m.winner !== null)
+  );
 }
 
-function render() {
-  const list = visibleItems();
-  countEl.textContent = `${list.length} wallpaper${list.length === 1 ? "" : "s"}`;
-  grid.innerHTML = list.map((item, idx) => `
-    <div class="card" data-idx="${idx}">
-      <img loading="lazy" src="${item.thumb}" alt="${item.title}">
-      <div class="meta">
-        <div class="t">${item.title}</div>
-        <div class="c">${item.category}</div>
-      </div>
-    </div>
-  `).join("");
-  grid.querySelectorAll(".card").forEach(c => {
-    c.addEventListener("click", () => openLightbox(parseInt(c.dataset.idx, 10)));
+/**
+ * Get the advancing teams from all pools (top `qualifyingPerPool` from each).
+ */
+function getAdvancingTeams(qualifyingPerPool) {
+  const advancing = [];
+  tournament.pools.forEach(pool => {
+    const standings = computePoolStandings(pool);
+    for (let i = 0; i < qualifyingPerPool && i < standings.length; i++) {
+      advancing.push(standings[i].team);
+    }
   });
+  return advancing;
 }
 
-function openLightbox(idx) {
-  const list = visibleItems();
-  if (idx < 0 || idx >= list.length) return;
-  activeIndex = idx;
-  const item = list[idx];
-  lbImg.src = item.full;
-  lbImg.alt = item.title;
-  lbTitle.textContent = `${item.title} · ${item.category}`;
-  lbDownload.href = item.jpg;
-  lbDownload.setAttribute("download", item.jpg_filename);
-  lbDownloadPng.href = item.full;
-  lbDownloadPng.setAttribute("download", item.filename);
-  lbOpen.href = item.full;
-  lb.classList.add("open");
-}
-function closeLightbox() { lb.classList.remove("open"); lbImg.src = ""; }
-function navLightbox(delta) {
-  const list = visibleItems();
-  if (!list.length) return;
-  activeIndex = (activeIndex + delta + list.length) % list.length;
-  openLightbox(activeIndex);
+/**
+ * Determine how many teams qualify from each pool based on total count and bracket size.
+ */
+function computeQualifyingCount(numPools, totalTeams) {
+  // We want the bracket to be a power of 2, ideally 4-16
+  const bracketSize = Math.min(nextPowerOf2(totalTeams), 16);
+  const perPool = Math.ceil(bracketSize / numPools);
+  return Math.min(perPool, 4); // cap at 4 per pool
 }
 
-document.getElementById("lbClose").addEventListener("click", closeLightbox);
-document.getElementById("lbPrev").addEventListener("click", () => navLightbox(-1));
-document.getElementById("lbNext").addEventListener("click", () => navLightbox(1));
-lb.addEventListener("click", e => { if (e.target === lb) closeLightbox(); });
-document.addEventListener("keydown", e => {
-  if (!lb.classList.contains("open")) return;
-  if (e.key === "Escape") closeLightbox();
-  if (e.key === "ArrowLeft") navLightbox(-1);
-  if (e.key === "ArrowRight") navLightbox(1);
+/**
+ * Generate the bracket from pool results.
+ * Seeds teams by pool standings: top of each pool gets top seeds.
+ */
+function generateBracketFromPools() {
+  const numPools = tournament.pools.length;
+  const qualifying = computeQualifyingCount(numPools, tournament.playerCount);
+  const advancing = getAdvancingTeams(qualifying);
+  const bracketSize = nextPowerOf2(advancing.length);
+  const rounds = Math.log2(bracketSize);
+
+  // Seed by pool: top of pool 1, top of pool 2, etc.
+  // Standard bracket seeding: 1 vs last, 2 vs second-to-last, etc.
+  const seeds = [];
+  const standingsPerPool = tournament.pools.map(p => computePoolStandings(p));
+  for (let i = 0; i < qualifying; i++) {
+    for (let p = 0; p < numPools; p++) {
+      if (i < standingsPerPool[p].length) {
+        seeds.push(standingsPerPool[p][i].team);
+      }
+    }
+  }
+
+  // Standard bracket seeding arrangement
+  const seededTeams = arrangeSeeds(seeds, bracketSize);
+
+  const matches = [];
+  let matchId = 0;
+  for (let round = 0; round < rounds; round++) {
+    const numMatchesInRound = Math.pow(2, rounds - 1 - round);
+    for (let mIdx = 0; mIdx < numMatchesInRound; mIdx++) {
+      matches.push({ id: `S-${matchId}`, round, team1: null, team2: null, winner: null, server: null });
+      matchId++;
+    }
+  }
+
+  // Fill R1 with seeded teams
+  const r1Matches = matches.filter(m => m.round === 0);
+  for (let i = 0; i < r1Matches.length; i++) {
+    r1Matches[i].team1 = seededTeams[i * 2] || null;
+    r1Matches[i].team2 = seededTeams[i * 2 + 1] || null;
+  }
+
+  const bracket = {
+    type: 'single',
+    matches,
+    bracketSize,
+    totalRounds: rounds,
+    seeded: true
+  };
+  return bracket;
+}
+
+/**
+ * Arrange seeds for a bracket: 1 vs 8, 2 vs 7, 3 vs 6, 4 vs 5 (for 8)
+ */
+function arrangeSeeds(teams, size) {
+  if (teams.length < size) {
+    const byes = [];
+    for (let i = teams.length; i < size; i++) byes.push(null);
+    teams = [...teams, ...byes];
+  }
+  const result = new Array(size).fill(null);
+  // Standard seeding: 1, 2, 3, 4 → positions 0, size/2-1, size/4-1, size/4
+  // Use the standard "snake" arrangement
+  const seeds = teams.map((t, i) => ({ team: t, seed: i + 1 }));
+
+  // Standard bracket positions for 8: [1,8,4,5,2,7,3,6]
+  // For size n, use recursive seeding
+  function seedPositions(n) {
+    if (n === 2) return [0, 1];
+    const half = n / 2;
+    const left = seedPositions(half);
+    const right = seedPositions(half);
+    const result = [];
+    for (let i = 0; i < half; i++) {
+      result.push(left[i]);
+      result.push(n - 1 - left[i]);
+    }
+    return result;
+  }
+
+  const positions = seedPositions(size);
+  positions.forEach((seedIdx, pos) => {
+    result[pos] = seeds[seedIdx] ? seeds[seedIdx].team : null;
+  });
+  return result;
+}
+
+/**
+ * Save a pool match result.
+ */
+function savePoolMatchResult(matchId, winner, score1, score2) {
+  const pool = tournament.pools.find(p => p.id === parseInt(matchId.split('-')[0].replace('P', '')));
+  if (!pool) return;
+  const match = pool.matches.find(m => m.id === matchId);
+  if (!match) return;
+  match.winner = winner;
+  match.score1 = score1;
+  match.score2 = score2;
+
+  // Check if all pools are complete → auto-generate bracket
+  if (poolsComplete()) {
+    const bracketFormat = document.getElementById('poolBracketFormat') ? document.getElementById('poolBracketFormat').value : 'single';
+    if (bracketFormat === 'single') {
+      tournament.bracket = generateBracketFromPools();
+    } else {
+      // For double elim, generate a double elim bracket from the advancing teams
+      tournament.bracket = generateDoubleElimFromPools();
+    }
+  }
+
+  saveTournament();
+  renderBracket();
+}
+
+/**
+ * Generate double-elim bracket from pool results.
+ */
+function generateDoubleElimFromPools() {
+  const numPools = tournament.pools.length;
+  const qualifying = computeQualifyingCount(numPools, tournament.playerCount);
+  const advancing = getAdvancingTeams(qualifying);
+  const bracketSize = nextPowerOf2(advancing.length);
+  const rounds = Math.log2(bracketSize);
+
+  const standingsPerPool = tournament.pools.map(p => computePoolStandings(p));
+  const seeds = [];
+  for (let i = 0; i < qualifying; i++) {
+    for (let p = 0; p < numPools; p++) {
+      if (i < standingsPerPool[p].length) seeds.push(standingsPerPool[p][i].team);
+    }
+  }
+
+  const seededTeams = arrangeSeeds(seeds, bracketSize);
+  const matches = { winners: [], losers: [] };
+  let wId = 0, lId = 0;
+
+  for (let round = 0; round < rounds; round++) {
+    const numMatchesInRound = Math.pow(2, rounds - 1 - round);
+    for (let mIdx = 0; mIdx < numMatchesInRound; mIdx++) {
+      matches.winners.push({ id: `W-${wId}`, round, team1: null, team2: null, winner: null, server: null });
+      wId++;
+    }
+  }
+  const wR1 = matches.winners.filter(m => m.round === 0);
+  for (let i = 0; i < wR1.length; i++) {
+    wR1[i].team1 = seededTeams[i * 2] || null;
+    wR1[i].team2 = seededTeams[i * 2 + 1] || null;
+  }
+
+  const losersR1Count = Math.floor(bracketSize / 4);
+  for (let mIdx = 0; mIdx < losersR1Count; mIdx++) {
+    matches.losers.push({ id: `L-${lId}`, round: 0, team1: null, team2: null, winner: null, server: null });
+    lId++;
+  }
+  for (let round = 1; round < rounds; round++) {
+    const numMatches = Math.pow(2, rounds - 1 - round);
+    for (let mIdx = 0; mIdx < numMatches; mIdx++) {
+      matches.losers.push({ id: `L-${lId}`, round, team1: null, team2: null, winner: null, server: null });
+      lId++;
+    }
+  }
+  if (bracketSize <= 8) {
+    matches.losers.push({ id: `L-${lId}`, round: rounds, team1: null, team2: null, winner: null, server: null });
+    lId++;
+  }
+
+  return {
+    type: 'double',
+    matches,
+    bracketSize,
+    totalRounds: rounds,
+    grandFinal: { id: 'GF', team1: null, team2: null, winner: null, server: null },
+    seeded: true
+  };
+}
+
+function renderBracket() {
+  const area = document.getElementById('bracketArea');
+  const content = document.getElementById('bracketContent');
+  area.style.display = 'block';
+  content.innerHTML = '';
+
+  if (tournament.type === 'pool') {
+    renderPoolPlay();
+    return;
+  }
+
+  if (tournament.type === 'single') {
+    renderSingleElim();
+  } else {
+    renderDoubleElim();
+  }
+}
+
+function renderPoolPlay() {
+  const content = document.getElementById('bracketContent');
+  let html = '<div class="pool-phase">';
+  html += '<div class="pool-phase-title">⚔ Pool Play — Round Robin</div>';
+  html += '<div class="pool-groups">';
+
+  const numPools = tournament.pools.length;
+  const qualifying = computeQualifyingCount(numPools, tournament.playerCount);
+
+  tournament.pools.forEach(pool => {
+    const standings = computePoolStandings(pool);
+    html += `<div class="pool-group">`;
+    html += `<div class="pool-group-title">Pool ${pool.id + 1} (${pool.realTeams.length} teams)</div>`;
+    html += '<table class="pool-standings-table">';
+    html += '<tr><th>#</th><th>Team</th><th>W-L</th><th>±</th><th>Pts</th></tr>';
+    standings.forEach((s, i) => {
+      const qualified = i < qualifying ? ' qualified' : '';
+      html += `<tr class="${qualified}">
+        <td class="rank">${i + 1}</td>
+        <td class="team-name">${s.team || '—'}</td>
+        <td>${s.wins}-${s.losses}</td>
+        <td>${s.diff > 0 ? '+' : ''}${s.diff}</td>
+        <td class="pts">${s.points}</td>
+      </tr>`;
+    });
+    html += '</table>';
+
+    // Pool matches
+    html += '<div class="pool-matches">';
+    html += '<div class="pool-matches-label">Matches</div>';
+    pool.matches.forEach(m => {
+      const s1 = m.score1 !== null ? m.score1 : '·';
+      const s2 = m.score2 !== null ? m.score2 : '·';
+      const w1 = m.winner === m.team1 ? ' winner' : '';
+      const w2 = m.winner === m.team2 ? ' winner' : '';
+      const hasScore = m.score1 !== null && m.score2 !== null;
+      html += `<div class="pool-match-row" data-match-id="${m.id}">
+        <span class="pm-team${w1}">${m.team1 || '—'}</span>
+        <span class="pm-score${hasScore ? ' has-result' : ''}">${s1}</span>
+        <span class="pm-team${w2}">${m.team2 || '—'}</span>
+        <span class="pm-score${hasScore ? ' has-result' : ''}">${s2}</span>
+      </div>`;
+    });
+    html += '</div>';
+    html += '</div>';
+  });
+
+  html += '</div>'; // pool-groups
+
+  // If all pools complete, show the bracket
+  if (poolsComplete()) {
+    html += '<div class="pool-divider">🏁 Pools complete — <strong>advancing to bracket</strong></div>';
+    html += '</div>'; // close pool-phase
+    html += '<div class="bracket-phase">';
+
+    if (tournament.bracket) {
+      // Render the bracket
+      const b = tournament.bracket;
+      if (b.type === 'single') {
+        html += renderSingleElimHTML(b);
+      } else {
+        html += renderDoubleElimHTML(b);
+      }
+    } else {
+      // Auto-generate bracket if it's missing (e.g., after page reload)
+      tournament.bracket = generateBracketFromPools();
+      saveTournament();
+      const b = tournament.bracket;
+      if (b.type === 'single') {
+        html += renderSingleElimHTML(b);
+      } else {
+        html += renderDoubleElimHTML(b);
+      }
+    }
+    html += '</div>';
+  } else {
+    // Show progress
+    const totalMatches = tournament.pools.reduce((s, p) => s + p.matches.length, 0);
+    const doneMatches = tournament.pools.reduce((s, p) => s + p.matches.filter(m => m.winner).length, 0);
+    html += `<div class="pool-divider">${doneMatches} / ${totalMatches} matches recorded — complete all pool matches to advance</div>`;
+    html += '</div>'; // close pool-phase
+  }
+
+  content.innerHTML = html;
+}
+
+/**
+ * Render single-elim bracket HTML from a bracket object (used for pool→bracket).
+ */
+function renderSingleElimHTML(bracket) {
+  if (!tournament.roundMaps) tournament.roundMaps = {};
+  const matches = bracket.matches;
+  const totalRounds = bracket.totalRounds || Math.log2(bracket.bracketSize);
+  const finalRound = totalRounds - 1;
+
+  let html = '<div class="bracket">';
+  for (let round = 0; round < totalRounds; round++) {
+    const roundMatches = matches.filter(m => m.round === round);
+    if (roundMatches.length === 0) continue;
+    const mapKey = `S-R${round}`;
+    const mapVal = (tournament.roundMaps && tournament.roundMaps[mapKey]) || '';
+    const label = `Round ${round + 1}`;
+    html += '<div class="col">';
+    html += `<div class="col-label">${label}</div>`;
+    if (mapVal) html += `<div class="round-map-display">🗺 ${mapVal}</div>`;
+    roundMatches.forEach(m => {
+      html += renderMatch(m, round === finalRound ? 'final' : '');
+    });
+    html += '</div>';
+    if (round < totalRounds - 1) html += '<div class="arrow">→</div>';
+  }
+  html += '</div>';
+
+  const finalMatch = matches[matches.length - 1];
+  if (finalMatch && finalMatch.winner && finalMatch.winner !== 'BYE') {
+    html += `<div class="winner-banner"><span class="trophy">🏆</span>${finalMatch.winner}</div>`;
+  }
+  return html;
+}
+
+/**
+ * Render double-elim bracket HTML from a bracket object (used for pool→bracket).
+ */
+function renderDoubleElimHTML(bracket) {
+  if (!tournament.roundMaps) tournament.roundMaps = {};
+  let html = '';
+  const wRounds = bracket.totalRounds || Math.log2(bracket.bracketSize);
+
+  html += '<div class="bracket-main">';
+  html += '<div class="bracket-stack">';
+  html += '<div class="bracket-section-label winners">WINNERS BRACKET</div>';
+  html += '<div class="bracket">';
+  const wMatches = bracket.matches.winners;
+  for (let round = 0; round < wRounds; round++) {
+    const roundMatches = wMatches.filter(m => m.round === round);
+    if (roundMatches.length === 0) continue;
+    const mapKey = `W-R${round}`;
+    const mapVal = (tournament.roundMaps && tournament.roundMaps[mapKey]) || '';
+    html += '<div class="col">';
+    html += `<div class="col-label">Winners R${round + 1}</div>`;
+    if (mapVal) html += `<div class="round-map-display">🗺 ${mapVal}</div>`;
+    roundMatches.forEach(m => {
+      html += renderMatch(m, round === wRounds - 1 ? 'final' : '');
+    });
+    html += '</div>';
+    if (round < wRounds - 1) html += '<div class="arrow">→</div>';
+  }
+  html += '</div>';
+  html += '<div class="flow">↓ losers drop here ↓</div>';
+  html += '<div class="bracket-section-label losers">LOSERS BRACKET</div>';
+  html += '<div class="bracket losers-bracket">';
+  const lMatches = bracket.matches.losers;
+  if (lMatches.length === 0) {
+    html += '<div style="color: var(--muted); font-size: 13px; padding: 12px;">No losers bracket</div>';
+  } else {
+    const lRounds = Math.max(...lMatches.map(m => m.round)) + 1;
+    for (let round = 0; round < lRounds; round++) {
+      const roundMatches = lMatches.filter(m => m.round === round);
+      if (roundMatches.length === 0) continue;
+      const roundNames = ['R1', 'QF', 'SF', 'Final'];
+      const mapKey = `L-R${round}`;
+      const mapVal = (tournament.roundMaps && tournament.roundMaps[mapKey]) || '';
+      html += '<div class="col">';
+      html += `<div class="col-label">Losers ${roundNames[round] || 'R' + (round + 1)}</div>`;
+      if (mapVal) html += `<div class="round-map-display">🗺 ${mapVal}</div>`;
+      roundMatches.forEach(m => {
+        html += renderMatch(m, round === lRounds - 1 ? 'final' : '');
+      });
+      html += '</div>';
+      if (round < lRounds - 1) html += '<div class="arrow">→</div>';
+    }
+  }
+  html += '</div>';
+  html += '</div>'; // bracket-stack
+
+  // Grand Final
+  if (!bracket.grandFinal) bracket.grandFinal = { id: 'GF', team1: null, team2: null, winner: null, server: null };
+  const wFinal = wMatches.filter(m => m.round === wRounds - 1);
+  const wChamp = wFinal.length > 0 && wFinal[0].winner ? wFinal[0].winner : null;
+  let lChamp = null;
+  if (lMatches.length > 0) {
+    const lRoundsForChamp = Math.max(...lMatches.map(m => m.round)) + 1;
+    const lFinal = lMatches.filter(m => m.round === lRoundsForChamp - 1);
+    if (lFinal.length > 0 && lFinal[0].winner) lChamp = lFinal[0].winner;
+  }
+  if (wChamp) bracket.grandFinal.team1 = wChamp;
+  if (lChamp) bracket.grandFinal.team2 = lChamp;
+
+  const gfMapVal = (tournament.roundMaps && tournament.roundMaps['GF']) || '';
+  html += '<div class="grand-final-wrap">';
+  html += '<div class="col-label" style="color: var(--yellow); font-size: 10px; letter-spacing: 2px; font-weight: 900;">GRAND FINAL</div>';
+  if (gfMapVal) html += `<div class="round-map-display">🗺 ${gfMapVal}</div>`;
+  html += renderMatch(bracket.grandFinal, 'final');
+  if (bracket.grandFinal.winner && bracket.grandFinal.winner !== 'BYE') {
+    html += `<div class="winner-banner"><span class="trophy">🏆</span>${bracket.grandFinal.winner}</div>`;
+  } else {
+    html += '<div class="winner-banner"><span class="trophy">🏆</span>Champion</div>';
+  }
+  html += '</div>';
+  html += '</div>'; // bracket-main
+  return html;
+}
+
+function renderSingleElim() {
+  const matches = tournament.matches;
+  const content = document.getElementById('bracketContent');
+  if (!tournament.roundMaps) tournament.roundMaps = {};
+
+  const hasPrelim = tournament.prelim && tournament.prelim.hasPrelim;
+  const totalRounds = tournament.totalRounds || Math.log2(tournament.bracketSize);
+  const finalRound = totalRounds - 1;
+
+  let html = '<div class="bracket">';
+  for (let round = 0; round < totalRounds; round++) {
+    const roundMatches = matches.filter(m => m.round === round);
+    if (roundMatches.length === 0) continue;
+    const mapKey = `S-R${round}`;
+    const mapVal = tournament.roundMaps[mapKey] || '';
+    // Label: Prelim for round 0 if hasPrelim, else Round 1
+    let label;
+    if (hasPrelim && round === 0) {
+      label = 'Prelim';
+    } else {
+      // Main rounds: round 1 = R1, round 2 = R2, etc.
+      const mainRoundNum = hasPrelim ? round : round;
+      label = hasPrelim ? `Winners R${round}` : `Round ${round + 1}`;
+    }
+    html += '<div class="col">';
+    html += `<div class="col-label">${label}</div>`;
+    if (mapVal) html += `<div class="round-map-display">🗺 ${mapVal}</div>`;
+    roundMatches.forEach(m => {
+      html += renderMatch(m, round === finalRound ? 'final' : '');
+    });
+    html += '</div>';
+    if (round < totalRounds - 1) html += '<div class="arrow">→</div>';
+  }
+  html += '</div>';
+
+  const finalMatch = matches[matches.length - 1];
+  if (finalMatch && finalMatch.winner && finalMatch.winner !== 'BYE') {
+    html += `<div class="winner-banner"><span class="trophy">🏆</span>${finalMatch.winner}</div>`;
+  }
+
+  content.innerHTML = html;
+}
+
+function renderDoubleElim() {
+  const content = document.getElementById('bracketContent');
+  if (!tournament.roundMaps) tournament.roundMaps = {};
+  let html = '';
+
+  const hasPrelim = tournament.prelim && tournament.prelim.hasPrelim;
+  const wRounds = tournament.totalRounds || Math.log2(tournament.bracketSize);
+
+  html += '<div class="bracket-main">';
+  html += '<div class="bracket-stack">';
+
+  html += '<div class="bracket-section-label winners">WINNERS BRACKET</div>';
+  html += '<div class="bracket">';
+  const wMatches = tournament.matches.winners;
+  for (let round = 0; round < wRounds; round++) {
+    const roundMatches = wMatches.filter(m => m.round === round);
+    if (roundMatches.length === 0) continue;
+    const mapKey = `W-R${round}`;
+    const mapVal = tournament.roundMaps[mapKey] || '';
+    let label;
+    if (hasPrelim && round === 0) {
+      label = 'Prelim';
+    } else {
+      label = hasPrelim ? `Winners R${round}` : `Winners R${round + 1}`;
+    }
+    html += '<div class="col">';
+    html += `<div class="col-label">${label}</div>`;
+    if (mapVal) html += `<div class="round-map-display">🗺 ${mapVal}</div>`;
+    roundMatches.forEach(m => {
+      html += renderMatch(m, round === wRounds - 1 ? 'final' : '');
+    });
+    html += '</div>';
+    if (round < wRounds - 1) html += '<div class="arrow">→</div>';
+  }
+  html += '</div>';
+
+  html += '<div class="flow">↓ losers drop here ↓</div>';
+
+  html += '<div class="bracket-section-label losers">LOSERS BRACKET</div>';
+  html += '<div class="bracket losers-bracket">';
+  const lMatches = tournament.matches.losers;
+  if (lMatches.length === 0) {
+    html += '<div style="color: var(--muted); font-size: 13px; padding: 12px;">No losers bracket (2-player tournament)</div>';
+  } else {
+  const lRounds = Math.max(...lMatches.map(m => m.round)) + 1;
+  for (let round = 0; round < lRounds; round++) {
+    const roundMatches = lMatches.filter(m => m.round === round);
+    if (roundMatches.length === 0) continue;
+    const roundNames = ['R1', 'QF', 'SF', 'Final'];
+    let mapKey;
+    const sharedWinnersRound = round + 1;
+    if (sharedWinnersRound < wRounds) {
+      mapKey = `W-R${sharedWinnersRound}`;
+    } else {
+      mapKey = `L-R${round}`;
+    }
+    const mapVal = tournament.roundMaps[mapKey] || '';
+    html += '<div class="col">';
+    html += `<div class="col-label">Losers ${roundNames[round] || 'R' + (round + 1)}</div>`;
+    if (mapVal) html += `<div class="round-map-display">🗺 ${mapVal}</div>`;
+    roundMatches.forEach(m => {
+      html += renderMatch(m, round === lRounds - 1 ? 'final' : '');
+    });
+    html += '</div>';
+    if (round < lRounds - 1) html += '<div class="arrow">→</div>';
+  }
+  html += '</div>';
+  } // end if lMatches.length > 0
+
+  html += '</div>'; // end bracket-stack
+
+  // Find actual champions
+  const wFinal = wMatches.filter(m => m.round === wRounds - 1);
+  const wChamp = wFinal.length > 0 && wFinal[0].winner ? wFinal[0].winner : null;
+
+  let lChamp = null;
+  if (lMatches.length > 0) {
+    const lRoundsForChamp = Math.max(...lMatches.map(m => m.round)) + 1;
+    const lFinal = lMatches.filter(m => m.round === lRoundsForChamp - 1);
+    if (lFinal.length > 0 && lFinal[0].winner) lChamp = lFinal[0].winner;
+  }
+
+  // Get or create the Grand Final match (persisted in tournament data)
+  if (!tournament.grandFinal) {
+    tournament.grandFinal = { id: 'GF', team1: null, team2: null, winner: null, server: null };
+  }
+  const gfMatch = tournament.grandFinal;
+  // Update team slots when champions are determined
+  if (wChamp) gfMatch.team1 = wChamp;
+  if (lChamp) gfMatch.team2 = lChamp;
+
+  const gfMapVal = tournament.roundMaps['GF'] || '';
+  html += '<div class="grand-final-wrap">';
+  html += '<div class="col-label" style="color: var(--yellow); font-size: 10px; letter-spacing: 2px; font-weight: 900;">GRAND FINAL</div>';
+  if (gfMapVal) html += `<div class="round-map-display">🗺 ${gfMapVal}</div>`;
+  html += renderMatch(gfMatch, 'final');
+  if (gfMatch.winner && gfMatch.winner !== 'BYE') {
+    html += `<div class="winner-banner"><span class="trophy">🏆</span>${gfMatch.winner}</div>`;
+  } else {
+    html += '<div class="winner-banner"><span class="trophy">🏆</span>Champion</div>';
+  }
+  html += '<div class="gf-note"><strong>Reset rule:</strong> If the losers champion wins, they get one more match.</div>';
+  html += '</div>';
+
+  html += '</div>'; // end bracket-main
+
+  content.innerHTML = html;
+}
+
+function renderMatch(m, cls = '') {
+  const clsAttr = cls ? ` class="match ${cls}"` : ' class="match"';
+  const t1 = m.team1 || '—';
+  const t2 = m.team2 || '—';
+  
+  // Detect BYE situations: only when one slot is literally 'BYE'
+  const isBye = m.team1 === 'BYE' || m.team2 === 'BYE';
+  const hasT1 = m.team1 && m.team1 !== '—' && m.team1 !== '' && m.team1 !== 'BYE';
+  const hasT2 = m.team2 && m.team2 !== '—' && m.team2 !== '' && m.team2 !== 'BYE';
+  
+  const winnerRow1 = m.winner === m.team1 ? 'winner' : '';
+  const winnerRow2 = m.winner === m.team2 ? 'winner' : '';
+  const bothTeamsSet = hasT1 && hasT2;
+  const statusDot = bothTeamsSet && !isBye
+    ? (m.winner && m.winner !== 'BYE' ? '<div class="status-dot recorded"></div>' : '<div class="status-dot scheduled"></div>')
+    : '';
+  const serverBadge = m.server ? `<div style="font-size: 10px; color: var(--muted); font-family: 'Consolas', 'SF Mono', monospace; margin-top: 5px; padding-top: 5px; border-top: 1px solid var(--border);">📍 ${m.server}</div>` : '';
+  const byeBadge = isBye ? `<div style="font-size: 10px; color: var(--red); margin-top: 3px; font-weight: 700;">BYE — auto-advances</div>` : '';
+
+  return `<div${clsAttr} data-match-id="${m.id}">
+    ${statusDot}
+    <div class="round-tag">${m.id}</div>
+    <div class="row ${winnerRow1}"><span class="team">${t1}</span></div>
+    <div class="row ${winnerRow2}"><span class="team">${t2}</span></div>
+    ${serverBadge}
+    ${byeBadge}
+  </div>`;
+}
+
+function switchTab(tab) {
+  document.getElementById('tabSet').classList.toggle('active', tab === 'set');
+  document.getElementById('tabResult').classList.toggle('active', tab === 'result');
+  document.getElementById('contentSet').classList.toggle('active', tab === 'set');
+  document.getElementById('contentResult').classList.toggle('active', tab === 'result');
+}
+
+function openPoolMatchModal(matchId) {
+  const poolIdx = parseInt(matchId.split('-')[0].replace('P', ''));
+  const match = tournament.pools[poolIdx].matches.find(m => m.id === matchId);
+  if (!match) return;
+
+  document.getElementById('team1Input').value = match.team1 || '';
+  document.getElementById('team2Input').value = match.team2 || '';
+  document.getElementById('serverInput').value = match.server || '';
+
+  // Allow editing team names if they're empty
+  const t1Empty = !match.team1 || match.team1 === null;
+  const t2Empty = !match.team2 || match.team2 === null;
+  document.getElementById('team1Input').disabled = !t1Empty;
+  document.getElementById('team2Input').disabled = !t2Empty;
+
+  // Show score inputs
+  const scoreWrap = document.getElementById('poolScoreWrap');
+  if (scoreWrap) scoreWrap.style.display = 'block';
+  const score1 = document.getElementById('poolScore1');
+  const score2 = document.getElementById('poolScore2');
+  if (score1) {
+    score1.value = match.score1 !== null ? match.score1 : '';
+    score1.disabled = false;
+  }
+  if (score2) {
+    score2.value = match.score2 !== null ? match.score2 : '';
+    score2.disabled = false;
+  }
+
+  // Populate winner dropdown
+  const winnerSelect = document.getElementById('winnerInput');
+  winnerSelect.innerHTML = '<option value="">Select winner...</option>';
+  winnerSelect.innerHTML += `<option value="${match.team1}" ${match.winner === match.team1 ? 'selected' : ''}>${match.team1}</option>`;
+  winnerSelect.innerHTML += `<option value="${match.team2}" ${match.winner === match.team2 ? 'selected' : ''}>${match.team2}</option>`;
+
+  switchTab('result');
+  document.getElementById('modalOverlay').classList.add('active');
+}
+
+function savePoolResult() {
+  const winner = document.getElementById('winnerInput').value;
+  if (!winner) {
+    alert('Please select a winner.');
+    return;
+  }
+
+  const poolIdx = parseInt(currentMatchId.split('-')[0].replace('P', ''));
+  const pool = tournament.pools[poolIdx];
+  const match = pool.matches.find(m => m.id === currentMatchId);
+  if (!match) return;
+
+  // Get scores if available
+  const score1El = document.getElementById('poolScore1');
+  const score2El = document.getElementById('poolScore2');
+  let s1 = null, s2 = null;
+  if (score1El && score1El.value !== '') s1 = parseInt(score1El.value);
+  if (score2El && score2El.value !== '') s2 = parseInt(score2El.value);
+
+  match.winner = winner;
+  match.score1 = s1;
+  match.score2 = s2;
+  match.server = document.getElementById('serverInput').value.trim();
+  // Save team names if they were editable
+  const t1 = document.getElementById('team1Input').value.trim();
+  const t2 = document.getElementById('team2Input').value.trim();
+  if (t1) match.team1 = t1;
+  if (t2) match.team2 = t2;
+
+  // Check if all pools complete → auto-generate bracket
+  if (poolsComplete()) {
+    const bracketFormat = document.getElementById('poolBracketFormat') ? document.getElementById('poolBracketFormat').value : 'single';
+    if (bracketFormat === 'single') {
+      tournament.bracket = generateBracketFromPools();
+    } else {
+      tournament.bracket = generateDoubleElimFromPools();
+    }
+  }
+
+  saveTournament();
+  renderBracket();
+  closeModal();
+}
+
+function openModal(matchId) {
+  currentMatchId = matchId;
+
+  // Handle pool matches
+  if (matchId.startsWith('P')) {
+    openPoolMatchModal(matchId);
+    return;
+  }
+
+  // Handle Grand Final separately
+  if (matchId === 'GF') {
+    const match = (tournament.type === 'pool' && tournament.bracket) ? tournament.bracket.grandFinal : tournament.grandFinal;
+    if (!match) return;
+    
+    document.getElementById('team1Input').value = match.team1 || '';
+    document.getElementById('team2Input').value = match.team2 || '';
+    document.getElementById('serverInput').value = match.server || '';
+    document.getElementById('team1Input').placeholder = 'Winners champion';
+    document.getElementById('team2Input').placeholder = 'Losers champion';
+    document.getElementById('team1Input').disabled = false;
+    document.getElementById('team2Input').disabled = false;
+    
+    const winnerSelect = document.getElementById('winnerInput');
+    winnerSelect.innerHTML = '<option value="">Select winner...</option>';
+    if (match.team1) winnerSelect.innerHTML += `<option value="${match.team1}" ${match.winner === match.team1 ? 'selected' : ''}>${match.team1}</option>`;
+    if (match.team2) winnerSelect.innerHTML += `<option value="${match.team2}" ${match.winner === match.team2 ? 'selected' : ''}>${match.team2}</option>`;
+    
+    const hasTeams = match.team1 && match.team2;
+    if (hasTeams && !match.winner) {
+      switchTab('result');
+    } else if (!hasTeams) {
+      switchTab('set');
+    } else {
+      switchTab('result');
+    }
+    
+    document.getElementById('modalOverlay').classList.add('active');
+    return;
+  }
+  
+  // Resolve match source: pool-bracket uses tournament.bracket, else tournament
+  let allMatches;
+  if (tournament.type === 'pool' && tournament.bracket) {
+    allMatches = tournament.bracket.type === 'single'
+      ? tournament.bracket.matches
+      : [...tournament.bracket.matches.winners, ...tournament.bracket.matches.losers];
+  } else {
+    allMatches = tournament.type === 'single'
+      ? tournament.matches
+      : [...tournament.matches.winners, ...tournament.matches.losers];
+  }
+
+  const match = allMatches.find(m => m.id === matchId);
+  if (!match) return;
+
+  // Detect BYE situations: only when one slot is literally 'BYE'
+  const hasT1 = match.team1 && match.team1 !== '—' && match.team1 !== '' && match.team1 !== 'BYE';
+  const hasT2 = match.team2 && match.team2 !== '—' && match.team2 !== '' && match.team2 !== 'BYE';
+  const isByeMatch = match.team1 === 'BYE' || match.team2 === 'BYE';
+
+  // Populate inputs
+  if (isByeMatch) {
+    // Determine which slot is the BYE slot and which is the real team slot
+    const byeSlot = match.team1 === 'BYE' ? 'team1' : match.team2 === 'BYE' ? 'team2' : null;
+    
+    if (byeSlot === 'team1') {
+      // team1 is BYE, user enters the real team in team2
+      document.getElementById('team1Input').value = '';
+      document.getElementById('team1Input').disabled = true;
+      document.getElementById('team1Input').placeholder = 'BYE (auto-advances)';
+      document.getElementById('team2Input').value = (hasT2 ? match.team2 : '') || '';
+      document.getElementById('team2Input').disabled = false;
+      document.getElementById('team2Input').placeholder = 'Enter team name';
+    } else if (byeSlot === 'team2') {
+      // team2 is BYE, user enters the real team in team1
+      document.getElementById('team1Input').value = (hasT1 ? match.team1 : '') || '';
+      document.getElementById('team1Input').disabled = false;
+      document.getElementById('team1Input').placeholder = 'Enter team name';
+      document.getElementById('team2Input').value = '';
+      document.getElementById('team2Input').disabled = true;
+      document.getElementById('team2Input').placeholder = 'BYE (auto-advances)';
+    } else {
+      // No explicit BYE marker — treat as single-team match
+      if (hasT1) {
+        document.getElementById('team1Input').value = match.team1 || '';
+        document.getElementById('team1Input').disabled = false;
+        document.getElementById('team2Input').value = '';
+        document.getElementById('team2Input').disabled = true;
+        document.getElementById('team2Input').placeholder = 'BYE (auto-advances)';
+      } else {
+        document.getElementById('team1Input').value = '';
+        document.getElementById('team1Input').disabled = true;
+        document.getElementById('team1Input').placeholder = 'BYE (auto-advances)';
+        document.getElementById('team2Input').value = (match.team2 || '');
+        document.getElementById('team2Input').disabled = false;
+      }
+    }
+    
+    document.getElementById('serverInput').value = match.server || '';
+  } else {
+    document.getElementById('team1Input').value = match.team1 || '';
+    document.getElementById('team2Input').value = match.team2 || '';
+    document.getElementById('serverInput').value = match.server || '';
+    document.getElementById('team1Input').placeholder = 'Enter team name';
+    document.getElementById('team2Input').placeholder = 'Enter team name';
+    document.getElementById('team1Input').disabled = false;
+    document.getElementById('team2Input').disabled = false;
+  }
+
+  // Populate winner dropdown
+  const winnerSelect = document.getElementById('winnerInput');
+  winnerSelect.innerHTML = '<option value="">Select winner...</option>';
+  if (isByeMatch) {
+    const realTeam = hasT1 ? match.team1 : hasT2 ? match.team2 : null;
+    if (realTeam) {
+      winnerSelect.innerHTML += `<option value="${realTeam}" selected>${realTeam} (auto-advances)</option>`;
+    } else {
+      // No real team yet — no winner options available
+      winnerSelect.innerHTML = '<option value="" disabled selected>Enter team first...</option>';
+    }
+  } else {
+    if (match.team1) winnerSelect.innerHTML += `<option value="${match.team1}" ${match.winner === match.team1 ? 'selected' : ''}>${match.team1}</option>`;
+    if (match.team2) winnerSelect.innerHTML += `<option value="${match.team2}" ${match.winner === match.team2 ? 'selected' : ''}>${match.team2}</option>`;
+  }
+
+  // Determine which tab to show
+  // For BYE matches, check if the real team (non-BYE slot) has been entered
+  let hasTeams;
+  if (isByeMatch) {
+    // BYE match: only count the non-BYE slot
+    const realTeam = match.team1 === 'BYE' ? match.team2 : match.team2 === 'BYE' ? match.team1 : (hasT1 ? match.team1 : match.team2);
+    hasTeams = !!realTeam && realTeam !== 'BYE';
+  } else {
+    hasTeams = match.team1 && match.team2;
+  }
+
+  if (hasTeams && !match.winner) {
+    // Teams set but no winner yet → open to Record Result tab
+    switchTab('result');
+  } else if (!hasTeams) {
+    // No teams set → open to Set Match tab
+    switchTab('set');
+  } else {
+    // Both teams and winner set → open to Record Result tab (to edit)
+    switchTab('result');
+  }
+
+  document.getElementById('modalOverlay').classList.add('active');
+  const activeInput = document.getElementById('team1Input').disabled ? document.getElementById('team2Input') : document.getElementById('team1Input');
+  activeInput.focus();
+}
+
+function closeModal() {
+  document.getElementById('modalOverlay').classList.remove('active');
+  const scoreWrap = document.getElementById('poolScoreWrap');
+  if (scoreWrap) scoreWrap.style.display = 'none';
+  currentMatchId = null;
+}
+
+function saveMatch() {
+  // Handle pool matches — save server and any edited team names, don't force winner
+  if (currentMatchId && currentMatchId.startsWith('P')) {
+    const poolIdx = parseInt(currentMatchId.split('-')[0].replace('P', ''));
+    const match = tournament.pools[poolIdx].matches.find(m => m.id === currentMatchId);
+    if (match) {
+      match.server = document.getElementById('serverInput').value.trim();
+      // Save team names if they were editable
+      const t1 = document.getElementById('team1Input').value.trim();
+      const t2 = document.getElementById('team2Input').value.trim();
+      if (t1) match.team1 = t1;
+      if (t2) match.team2 = t2;
+      saveTournament();
+      renderBracket();
+    }
+    closeModal();
+    return;
+  }
+
+  // Handle Grand Final separately
+  if (currentMatchId === 'GF') {
+    const gf = (tournament.type === 'pool' && tournament.bracket) ? tournament.bracket.grandFinal : tournament.grandFinal;
+    if (!gf) return;
+    const match = gf;
+    
+    const t1 = document.getElementById('team1Input').value.trim();
+    const t2 = document.getElementById('team2Input').value.trim();
+    const server = document.getElementById('serverInput').value.trim();
+    
+    if (t1) match.team1 = t1;
+    if (t2) match.team2 = t2;
+    match.server = server;
+    
+    saveTournament();
+    renderBracket();
+    closeModal();
+    return;
+  }
+  
+  let allMatches;
+  if (tournament.type === 'pool' && tournament.bracket) {
+    allMatches = tournament.bracket.type === 'single'
+      ? tournament.bracket.matches
+      : [...tournament.bracket.matches.winners, ...tournament.bracket.matches.losers];
+  } else {
+    allMatches = tournament.type === 'single'
+      ? tournament.matches
+      : [...tournament.matches.winners, ...tournament.matches.losers];
+  }
+
+  const match = allMatches.find(m => m.id === currentMatchId);
+  if (!match) return;
+
+  // Detect BYE situations: only when one slot is literally 'BYE'
+  const hasT1 = match.team1 && match.team1 !== '—' && match.team1 !== '' && match.team1 !== 'BYE';
+  const hasT2 = match.team2 && match.team2 !== '—' && match.team2 !== '' && match.team2 !== 'BYE';
+  const isByeMatch = match.team1 === 'BYE' || match.team2 === 'BYE';
+
+  if (isByeMatch) {
+    // BYE match: read the real team from input fields
+    const t1 = document.getElementById('team1Input').value.trim();
+    const t2 = document.getElementById('team2Input').value.trim();
+    const realTeam = t1 || t2;
+    
+    if (!realTeam) {
+      alert('Please enter the team name for this BYE match.');
+      return;
+    }
+
+    // Save the real team into the non-BYE slot
+    if (match.team1 === 'BYE') {
+      match.team2 = realTeam;
+    } else {
+      match.team1 = realTeam;
+    }
+    
+    match.server = document.getElementById('serverInput').value.trim();
+    match.winner = realTeam; // Auto-advance
+    propagateWinner(match, realTeam);
+  } else {
+    const t1 = document.getElementById('team1Input').value.trim();
+    const t2 = document.getElementById('team2Input').value.trim();
+    const server = document.getElementById('serverInput').value.trim();
+
+    if (!t1 && !t2) {
+      alert('Please enter at least one team name.');
+      return;
+    }
+
+    if (t1) match.team1 = t1;
+    if (t2) match.team2 = t2;
+    match.server = server;
+  }
+
+  saveTournament();
+  renderBracket();
+
+  // Close the modal (don't force winner selection)
+  closeModal();
+}
+
+function saveResult() {
+  const winner = document.getElementById('winnerInput').value;
+  if (!winner) {
+    alert('Please select a winner.');
+    return;
+  }
+
+  // Handle pool matches
+  if (currentMatchId && currentMatchId.startsWith('P')) {
+    savePoolResult();
+    return;
+  }
+
+  // Handle Grand Final separately
+  if (currentMatchId === 'GF') {
+    const gf = (tournament.type === 'pool' && tournament.bracket) ? tournament.bracket.grandFinal : tournament.grandFinal;
+    if (gf) {
+      gf.winner = winner;
+      saveTournament();
+      renderBracket();
+    }
+    closeModal();
+    return;
+  }
+
+  let allMatches;
+  if (tournament.type === 'pool' && tournament.bracket) {
+    allMatches = tournament.bracket.type === 'single'
+      ? tournament.bracket.matches
+      : [...tournament.bracket.matches.winners, ...tournament.bracket.matches.losers];
+  } else {
+    allMatches = tournament.type === 'single'
+      ? tournament.matches
+      : [...tournament.matches.winners, ...tournament.matches.losers];
+  }
+
+  const match = allMatches.find(m => m.id === currentMatchId);
+  if (match) {
+    match.winner = winner;
+
+    // Propagate winner to next round
+    propagateWinner(match, winner);
+
+    saveTournament();
+    renderBracket();
+  }
+
+  closeModal();
+}
+
+function propagateWinner(match, winner) {
+  const loser = (match.team1 === winner) ? match.team2 : match.team1;
+
+  // For pool tournaments, the bracket is in tournament.bracket
+  let bracket;
+  if (tournament.type === 'pool' && tournament.bracket) {
+    bracket = tournament.bracket;
+  } else {
+    bracket = tournament;
+  }
+
+  const hasPrelim = bracket.prelim && bracket.prelim.hasPrelim;
+  const totalRounds = bracket.totalRounds || Math.log2(bracket.bracketSize);
+
+  if (bracket.type === 'single') {
+    // Find the next round match
+    const nextRound = match.round + 1;
+    const allMatches = bracket.matches;
+    const nextMatches = allMatches.filter(m => m.round === nextRound);
+
+    if (nextMatches.length === 0) return; // This was the final
+
+    // Determine which slot this match feeds into
+    const roundMatches = allMatches.filter(m => m.round === match.round);
+    const matchIndexInRound = roundMatches.indexOf(match);
+
+    if (match.isPrelim) {
+      // Prelim winner feeds into Main R1 (round 1)
+      const mainR1Matches = nextMatches;
+      const directTeams = bracket.prelim ? bracket.prelim.directTeams : 0;
+      const r1Idx = directTeams + Math.floor(matchIndexInRound / 2);
+      const slot = matchIndexInRound % 2 === 0 ? 'team1' : 'team2';
+      if (mainR1Matches[r1Idx]) {
+        if (mainR1Matches[r1Idx][slot] === null || mainR1Matches[r1Idx][slot] === '—' || mainR1Matches[r1Idx][slot] === '') {
+          mainR1Matches[r1Idx][slot] = winner;
+        }
+      }
+    } else {
+      // Standard propagation: round N → round N+1
+      const nextMatch = nextMatches[Math.floor(matchIndexInRound / 2)];
+      if (nextMatch) {
+        const slot = matchIndexInRound % 2 === 0 ? 'team1' : 'team2';
+        if (nextMatch[slot] === null || nextMatch[slot] === '—' || nextMatch[slot] === '') {
+          nextMatch[slot] = winner;
+        }
+      }
+    }
+  } else {
+    // Double elim
+    const isWinnersMatch = match.id.startsWith('W-');
+    const isLosersMatch = match.id.startsWith('L-');
+
+    if (isWinnersMatch) {
+      const nextRound = match.round + 1;
+      const wAll = bracket.matches.winners;
+      const nextWMatches = wAll.filter(m => m.round === nextRound);
+
+      if (nextWMatches.length > 0) {
+        const roundMatches = wAll.filter(m => m.round === match.round);
+        const matchIndexInRound = roundMatches.indexOf(match);
+
+        if (match.isPrelim) {
+          const mainR1Matches = nextWMatches;
+          const directTeams = bracket.prelim ? bracket.prelim.directTeams : 0;
+          const r1Idx = directTeams + Math.floor(matchIndexInRound / 2);
+          const slot = matchIndexInRound % 2 === 0 ? 'team1' : 'team2';
+          if (mainR1Matches[r1Idx]) {
+            if (mainR1Matches[r1Idx][slot] === null || mainR1Matches[r1Idx][slot] === '—' || mainR1Matches[r1Idx][slot] === '') {
+              mainR1Matches[r1Idx][slot] = winner;
+            }
+          }
+        } else {
+          const nextMatch = nextWMatches[Math.floor(matchIndexInRound / 2)];
+          if (nextMatch) {
+            const slot = matchIndexInRound % 2 === 0 ? 'team1' : 'team2';
+            if (nextMatch[slot] === null || nextMatch[slot] === '—' || nextMatch[slot] === '') {
+              nextMatch[slot] = winner;
+            }
+          }
+        }
+      }
+
+      const losersMatches = bracket.matches.losers;
+
+      if (match.isPrelim) {
+        const losersR1 = losersMatches.filter(m => m.round === 0);
+        const prelimMatchesInRound = wAll.filter(m => m.round === match.round && m.isPrelim);
+        const wIdx = prelimMatchesInRound.indexOf(match);
+        const lIdx = Math.floor(wIdx / 2);
+        const slot = wIdx % 2 === 0 ? 'team1' : 'team2';
+        if (losersR1[lIdx]) {
+          losersR1[lIdx][slot] = (loser && loser !== 'BYE') ? loser : 'BYE';
+        }
+      } else if (match.round === 1 && hasPrelim) {
+        const losersR1 = losersMatches.filter(m => m.round === 0);
+        const mainR1Matches = wAll.filter(m => m.round === 1);
+        const wIdx = mainR1Matches.indexOf(match);
+        const lIdx = Math.floor(wIdx / 2);
+        const slot = wIdx % 2 === 0 ? 'team1' : 'team2';
+        if (losersR1[lIdx]) {
+          losersR1[lIdx][slot] = (loser && loser !== 'BYE') ? loser : 'BYE';
+        }
+      } else if (loser && loser !== 'BYE' && loser !== null && loser !== '') {
+        const maxLosersRound = Math.max(...losersMatches.map(m => m.round));
+        const winnersRounds = Math.log2(bracket.bracketSize);
+
+        const effectiveRound = hasPrelim ? match.round - 1 : match.round;
+
+        if (match.round === totalRounds - 1) {
+          const lFinalMatches = losersMatches.filter(m => m.round === maxLosersRound);
+          if (lFinalMatches.length > 0) {
+            const targetMatch = lFinalMatches[0];
+            if (targetMatch.team2 === null || targetMatch.team2 === '—' || targetMatch.team2 === '') {
+              targetMatch.team2 = loser;
+            }
+          }
+        } else {
+          const losersRound = hasPrelim ? match.round - 1 : match.round;
+          const losersInRound = losersMatches.filter(m => m.round === losersRound);
+          if (losersInRound.length > 0) {
+            const wMatchesInRound = wAll.filter(m => m.round === match.round);
+            const wIdx = wMatchesInRound.indexOf(match);
+            const targetMatch = losersInRound[wIdx];
+            if (targetMatch) {
+              if (targetMatch.team2 === null || targetMatch.team2 === '—' || targetMatch.team2 === '') {
+                targetMatch.team2 = loser;
+              }
+            }
+          }
+        }
+      }
+    }
+
+    if (isLosersMatch) {
+      const nextRound = match.round + 1;
+      const lAll = bracket.matches.losers;
+      const nextMatches = lAll.filter(m => m.round === nextRound);
+
+      if (nextMatches.length > 0) {
+        const matchIndexInRound = lAll.filter(m => m.round === match.round).indexOf(match);
+        const currentRoundMatches = lAll.filter(m => m.round === match.round);
+
+        let targetMatch, slot;
+        if (currentRoundMatches.length === nextMatches.length) {
+          targetMatch = nextMatches[matchIndexInRound];
+          slot = 'team1';
+        } else {
+          targetMatch = nextMatches[Math.floor(matchIndexInRound / 2)];
+          slot = matchIndexInRound % 2 === 0 ? 'team1' : 'team2';
+        }
+
+        if (targetMatch) {
+          if (targetMatch[slot] === null || targetMatch[slot] === '—' || targetMatch[slot] === '') {
+            targetMatch[slot] = winner;
+          }
+        }
+      }
+    }
+  }
+}
+
+function saveTournament() {
+  localStorage.setItem('lanTournament', JSON.stringify(tournament));
+}
+
+function loadTournament() {
+  const saved = localStorage.getItem('lanTournament');
+  if (saved) {
+    tournament = JSON.parse(saved);
+    renderBracket();
+  }
+}
+
+function resetTournament() {
+  if (confirm('Reset tournament? All data will be lost.')) {
+    tournament = null;
+    localStorage.removeItem('lanTournament');
+    document.getElementById('bracketArea').style.display = 'none';
+    document.getElementById('bracketContent').innerHTML = '';
+    expandSetup();
+  }
+}
+
+function shuffleArray(arr) {
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
+
+document.getElementById('startBtn').addEventListener('click', () => {
+  const count = parseInt(document.getElementById('participantCount').value);
+  const format = document.getElementById('tournamentFormat').value;
+
+  // Collect team names from input grid
+  const inputs = document.querySelectorAll('#teamInputsGrid input');
+  const teamNames = [];
+  inputs.forEach(inp => {
+    const val = inp.value.trim();
+    if (val) teamNames.push(val);
+  });
+
+  if (format === 'pool') {
+    const poolSize = parseInt(document.getElementById('poolSize').value) || 5;
+    tournament = generatePoolTournament(count, poolSize, teamNames.length > 0 ? teamNames : null);
+    // Collect round maps
+    const mapInputs = document.querySelectorAll('#mapInputsGrid input');
+    tournament.roundMaps = {};
+    mapInputs.forEach(inp => {
+      const val = inp.value.trim();
+      if (val) tournament.roundMaps[inp.dataset.mapkey] = val;
+    });
+    saveTournament();
+    renderBracket();
+    collapseSetup();
+    return;
+  }
+
+  tournament = generateBracket(count, format, teamNames.length > 0 ? teamNames : null);
+
+  // Collect round maps from setup panel
+  const mapInputs = document.querySelectorAll('#mapInputsGrid input');
+  tournament.roundMaps = {};
+  mapInputs.forEach(inp => {
+    const val = inp.value.trim();
+    if (val) tournament.roundMaps[inp.dataset.mapkey] = val;
+  });
+
+  saveTournament();
+  renderBracket();
+
+  // Auto-collapse setup panel after start
+  collapseSetup();
 });
+
+document.getElementById('resetBtn').addEventListener('click', resetTournament);
+
+// Collapsible setup panel
+function toggleSetup() {
+  const panel = document.getElementById('setupPanel');
+  panel.classList.toggle('collapsed');
+  const btn = document.getElementById('setupToggle');
+  if (panel.classList.contains('collapsed')) {
+    btn.textContent = 'Show ▼';
+  } else {
+    btn.textContent = 'Hide ▲';
+  }
+}
+
+function collapseSetup() {
+  const panel = document.getElementById('setupPanel');
+  if (!panel.classList.contains('collapsed')) {
+    panel.classList.add('collapsed');
+    document.getElementById('setupToggle').textContent = 'Show ▼';
+  }
+}
+
+function expandSetup() {
+  const panel = document.getElementById('setupPanel');
+  if (panel.classList.contains('collapsed')) {
+    panel.classList.remove('collapsed');
+    document.getElementById('setupToggle').textContent = 'Hide ▲';
+  }
+}
+
+// Generate team name inputs when participant count changes
+function buildTeamInputs(count) {
+  const grid = document.getElementById('teamInputsGrid');
+  grid.innerHTML = '';
+  const format = document.getElementById('tournamentFormat').value;
+  const poolSize = parseInt(document.getElementById('poolSize').value) || 5;
+  const numPools = Math.ceil(count / poolSize);
+
+  if (format === 'pool') {
+    // Show pool group labels
+    for (let p = 0; p < numPools; p++) {
+      const label = document.createElement('div');
+      label.className = 'pool-group-label';
+      label.textContent = `Pool ${String.fromCharCode(65 + p)}`;
+      grid.appendChild(label);
+
+      const teamsInPool = (p === numPools - 1) ? (count - p * poolSize) : poolSize;
+      for (let i = 0; i < teamsInPool; i++) {
+        const globalIdx = p * poolSize + i;
+        const inp = document.createElement('input');
+        inp.type = 'text';
+        inp.placeholder = `Team ${globalIdx + 1}`;
+        inp.dataset.teamIndex = globalIdx;
+        grid.appendChild(inp);
+      }
+    }
+  } else {
+    for (let i = 0; i < count; i++) {
+      const inp = document.createElement('input');
+      inp.type = 'text';
+      inp.placeholder = `Team ${i + 1}`;
+      inp.dataset.teamIndex = i;
+      grid.appendChild(inp);
+    }
+  }
+}
+
+document.getElementById('participantCount').addEventListener('change', (e) => {
+  buildTeamInputs(parseInt(e.target.value));
+  buildMapInputs();
+});
+
+document.getElementById('tournamentFormat').addEventListener('change', (e) => {
+  const poolGroup = document.getElementById('poolSizeGroup');
+  if (poolGroup) {
+    poolGroup.style.display = e.target.value === 'pool' ? 'block' : 'none';
+  }
+  buildTeamInputs(parseInt(document.getElementById('participantCount').value));
+  buildMapInputs();
+});
+
+document.getElementById('poolSize').addEventListener('change', () => {
+  buildTeamInputs(parseInt(document.getElementById('participantCount').value));
+});
+
+// Build map inputs in the setup panel based on format and participant count
+function buildMapInputs() {
+  const grid = document.getElementById('mapInputsGrid');
+  grid.innerHTML = '';
+  const count = parseInt(document.getElementById('participantCount').value);
+  const format = document.getElementById('tournamentFormat').value;
+
+  if (format === 'pool') {
+    // Pool play: just one map input for the bracket phase
+    const inp = document.createElement('input');
+    inp.type = 'text';
+    inp.placeholder = 'Bracket phase map';
+    inp.dataset.mapkey = `S-R0`;
+    grid.appendChild(inp);
+    return;
+  }
+
+  const bracketSize = nextPowerOf2(count);
+  const rounds = Math.log2(bracketSize);
+  const roundNames = ['R1', 'R2', 'R3', 'R4', 'R5', 'R6'];
+  const prelim = computePrelim(count);
+  const hasPrelim = prelim.hasPrelim;
+  const totalRounds = hasPrelim ? rounds + 1 : rounds;
+
+  if (format === 'single') {
+    if (hasPrelim) {
+      const pInp = document.createElement('input');
+      pInp.type = 'text';
+      pInp.placeholder = 'Prelim map';
+      pInp.dataset.mapkey = `S-R0`;
+      grid.appendChild(pInp);
+    }
+    for (let r = 0; r < rounds; r++) {
+      const inp = document.createElement('input');
+      inp.type = 'text';
+      inp.placeholder = hasPrelim ? `Winners R${r + 1} map` : `Round ${r + 1} map`;
+      inp.dataset.mapkey = hasPrelim ? `S-R${r + 1}` : `S-R${r}`;
+      grid.appendChild(inp);
+    }
+  } else {
+    // Winners bracket rounds
+    if (hasPrelim) {
+      const pInp = document.createElement('input');
+      pInp.type = 'text';
+      pInp.placeholder = 'Prelim map';
+      pInp.dataset.mapkey = `W-R0`;
+      grid.appendChild(pInp);
+    }
+    for (let r = 0; r < rounds; r++) {
+      const inp = document.createElement('input');
+      inp.type = 'text';
+      inp.placeholder = hasPrelim ? `Winners R${r + 1} map` : `Winners ${roundNames[r] || 'R' + (r+1)} map`;
+      inp.dataset.mapkey = hasPrelim ? `W-R${r + 1}` : `W-R${r}`;
+      grid.appendChild(inp);
+    }
+    // Losers bracket rounds
+    const lRounds = bracketSize <= 8 ? rounds + 1 : rounds;
+    for (let r = 0; r < lRounds; r++) {
+      const sharedWith = r + 1;
+      if (sharedWith < totalRounds) {
+        const inp = document.createElement('input');
+        inp.type = 'text';
+        inp.placeholder = `Losers ${roundNames[r] || 'R' + (r+1)} = W${roundNames[sharedWith] || (sharedWith+1)}`;
+        inp.dataset.mapkey = `W-R${sharedWith}`;
+        inp.dataset.sharedWith = `L-R${r}`;
+        grid.appendChild(inp);
+      } else {
+        const inp = document.createElement('input');
+        inp.type = 'text';
+        inp.placeholder = `Losers ${roundNames[r] || 'R' + (r+1)} map`;
+        inp.dataset.mapkey = `L-R${r}`;
+        grid.appendChild(inp);
+      }
+    }
+    // Grand Final
+    const gf = document.createElement('input');
+    gf.type = 'text';
+    gf.placeholder = 'Grand Final map';
+    gf.dataset.mapkey = 'GF';
+    grid.appendChild(gf);
+  }
+}
+
+// Initialize team inputs and map inputs on load
+buildTeamInputs(parseInt(document.getElementById('participantCount').value));
+buildMapInputs();
+
+document.addEventListener('click', (e) => {
+  const matchEl = e.target.closest('.match');
+  if (matchEl) {
+    const matchId = matchEl.dataset.matchId;
+    if (matchId) {
+      openModal(matchId);
+      return;
+    }
+  }
+  const poolMatchEl = e.target.closest('.pool-match-row');
+  if (poolMatchEl) {
+    const matchId = poolMatchEl.dataset.matchId;
+    if (matchId) {
+      openModal(matchId);
+      return;
+    }
+  }
+});
+
+loadTournament();
 </script>
+
 </body>
 </html>
