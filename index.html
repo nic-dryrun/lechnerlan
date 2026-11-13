@@ -4,29 +4,28 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Lechner LAN — Bracket Tracker</title>
-<style>
-  :root {
-    --bg: #0a1020;
-    --panel: #060b16;
-    --ink: #ffffff;
-    --muted: #93a4c8;
-    --red: #3b82f6;
-    --yellow: #22d3ee;
-    --blue: #a855f7;
-    --border: #ffffff;
-    --card: #101828;
-    --card-hover: #1a2540;
-    --halftone: radial-gradient(circle, rgba(34,211,238,0.09) 1px, transparent 1.5px);
+<style>:root {
+    --bg: #f5f3ff;
+    --panel: #ffffff;
+    --ink: #111111;
+    --muted: #4a4a4a;
+    --red: #f43f5e;
+    --yellow: #facc15;
+    --blue: #3b82f6;
+    --border: #111111;
+    --card: #ffffff;
+    --card-hover: #facc15;
+    --halftone: radial-gradient(circle, rgba(17,17,17,0.14) 1.2px, transparent 1.6px);
     --head-font: 'Arial Black','Impact',sans-serif;
-    --body-font: 'Courier New',monospace;
+    --body-font: 'Arial','Helvetica',sans-serif;
   }
   * { box-sizing: border-box; }
   body {
     margin: 0;
-    font-family: var(--body-font, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif);
+    font-family: var(--body-font, 'Arial', 'Helvetica', sans-serif);
     background: var(--bg);
     background-image: var(--halftone);
-    background-size: 12px 12px;
+    background-size: 16px 16px;
     color: var(--ink);
     padding: 28px 24px;
   }
@@ -34,23 +33,20 @@
     text-align: center;
     font-family: var(--head-font, 'Arial Black', 'Impact', sans-serif);
     font-weight: 900;
-    letter-spacing: 1px;
+    letter-spacing: 0.5px;
     text-transform: uppercase;
     margin: 0 0 4px;
-    font-size: clamp(28px, 4vw, 48px);
-    color: var(--yellow);
-    text-shadow:
-      0 0 8px rgba(34,211,238,0.6),
-      0 0 24px rgba(168,85,247,0.4),
-      3px 3px 0 rgba(59,130,246,0.7);
+    font-size: clamp(26px, 4vw, 44px);
+    color: var(--ink);
+    text-shadow: 3px 3px 0 var(--yellow), 6px 6px 0 var(--ink);
   }
   .sub {
     text-align: center;
     color: var(--muted);
     margin: 0 0 24px;
     font-size: 14px;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-    font-weight: 400;
+    font-family: var(--body-font, 'Arial', 'Helvetica', sans-serif);
+    font-weight: 700;
   }
 
   /* SETUP PANEL */
@@ -59,39 +55,44 @@
     margin: 0 auto 28px;
     background: var(--panel);
     border: 3px solid var(--border);
-    border-radius: 4px;
+    border-radius: 8px;
     padding: 22px 26px;
     position: relative;
-    box-shadow: 4px 4px 0 rgba(0,0,0,0.5);
+    box-shadow: 6px 6px 0 var(--ink);
   }
   .setup h2 {
     margin: 0 0 14px;
-    font-size: 14px;
+    font-size: 16px;
     font-weight: 900;
     text-transform: uppercase;
-    letter-spacing: 2px;
-    color: var(--yellow);
-    text-shadow: 0 0 6px rgba(34,211,238,0.5);
+    letter-spacing: 0.5px;
+    color: var(--ink);
     font-family: var(--head-font, 'Arial Black', 'Impact', sans-serif);
     display: flex;
     align-items: center;
     justify-content: space-between;
   }
   .setup-toggle {
-    background: none;
-    border: 2px solid var(--border);
-    border-radius: 3px;
-    color: var(--muted);
+    background: var(--yellow);
+    border: 3px solid var(--border);
+    border-radius: 6px;
+    color: var(--ink);
     font-size: 12px;
-    font-weight: 700;
+    font-weight: 900;
     padding: 4px 10px;
     cursor: pointer;
-    font-family: var(--body-font, 'Courier New', monospace);
-    transition: color 0.15s, border-color 0.15s;
+    text-transform: uppercase;
+    font-family: var(--head-font, 'Arial Black', 'Impact', sans-serif);
+    box-shadow: 4px 4px 0 var(--ink);
+    transition: transform 0.1s, box-shadow 0.1s;
   }
   .setup-toggle:hover {
-    color: var(--yellow);
-    border-color: var(--yellow);
+    transform: translate(-2px,-2px);
+    box-shadow: 6px 6px 0 var(--ink);
+  }
+  .setup-toggle:active {
+    transform: translate(2px,2px);
+    box-shadow: 0 0 0 var(--ink);
   }
   .setup-details {
     overflow: hidden;
@@ -109,7 +110,7 @@
   .setup-row { display: flex; gap: 16px; margin-bottom: 14px; flex-wrap: wrap; }
   .team-inputs-wrap {
     margin-top: 14px;
-    border-top: 2px solid var(--border);
+    border-top: 3px solid var(--border);
     padding-top: 14px;
     margin-bottom: 20px;
   }
@@ -120,7 +121,8 @@
     letter-spacing: 1.5px;
     color: var(--muted);
     margin-bottom: 10px;
-    font-weight: 700;
+    font-weight: 900;
+    font-family: var(--body-font, 'Arial', 'Helvetica', sans-serif);
   }
   .team-inputs-grid {
     display: grid;
@@ -131,28 +133,30 @@
     grid-column: 1 / -1;
     font-size: 11px;
     letter-spacing: 1px;
-    font-weight: 700;
-    color: var(--yellow);
+    font-weight: 900;
+    color: var(--ink);
     margin-top: 6px;
     text-transform: uppercase;
     padding: 4px 0;
-    border-bottom: 1px solid var(--border);
+    border-bottom: 3px solid var(--border);
   }
   .team-inputs-grid input {
     width: 100%;
     background: var(--card);
-    border: 2px solid var(--border);
-    border-radius: 4px;
+    border: 3px solid var(--border);
+    border-radius: 6px;
     color: var(--ink);
-    padding: 10px 14px;
+    padding: 8px 12px;
     font-size: 15px;
     outline: none;
-    font-family: var(--body-font, 'Courier New', monospace);
-    transition: border-color 0.15s, box-shadow 0.15s;
+    font-weight: 700;
+    font-family: var(--body-font, 'Arial', 'Helvetica', sans-serif);
+    box-shadow: 4px 4px 0 var(--ink);
+    transition: transform 0.1s, box-shadow 0.1s;
   }
   .team-inputs-grid input:focus {
-    border-color: var(--yellow);
-    box-shadow: 0 0 0 2px rgba(255,214,0,0.25);
+    outline: none;
+    box-shadow: 4px 4px 0 var(--blue);
   }
   .map-setup-grid {
     display: grid;
@@ -162,18 +166,20 @@
   .map-setup-grid input {
     width: 100%;
     background: var(--card);
-    border: 2px solid var(--border);
-    border-radius: 4px;
+    border: 3px solid var(--border);
+    border-radius: 6px;
     color: var(--ink);
-    padding: 10px 14px;
+    padding: 8px 12px;
     font-size: 14px;
     outline: none;
-    font-family: var(--body-font, 'Courier New', monospace);
-    transition: border-color 0.15s, box-shadow 0.15s;
+    font-weight: 700;
+    font-family: var(--body-font, 'Arial', 'Helvetica', sans-serif);
+    box-shadow: 4px 4px 0 var(--ink);
+    transition: transform 0.1s, box-shadow 0.1s;
   }
   .map-setup-grid input:focus {
-    border-color: var(--yellow);
-    box-shadow: 0 0 0 2px rgba(255,214,0,0.25);
+    outline: none;
+    box-shadow: 4px 4px 0 var(--blue);
   }
   .round-map-display {
     font-size: 10px;
@@ -182,10 +188,10 @@
     margin-bottom: 6px;
     padding: 3px 8px;
     background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 3px;
+    border: 3px solid var(--border);
+    border-radius: 6px;
     display: inline-block;
-    font-family: 'Courier New', monospace;
+    font-family: var(--body-font, 'Arial', 'Helvetica', sans-serif);
     letter-spacing: 0.5px;
   }
   .setup-group { flex: 1; min-width: 180px; }
@@ -196,49 +202,51 @@
     letter-spacing: 1.5px;
     color: var(--muted);
     margin-bottom: 5px;
-    font-weight: 700;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    font-weight: 900;
+    font-family: var(--body-font, 'Arial', 'Helvetica', sans-serif);
   }
   .setup-group select,
   .setup-group input {
     width: 100%;
     background: var(--card);
-    border: 2px solid var(--border);
-    border-radius: 4px;
+    border: 3px solid var(--border);
+    border-radius: 6px;
     color: var(--ink);
-    padding: 9px 12px;
+    padding: 8px 12px;
     font-size: 15px;
     outline: none;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-    transition: border-color 0.15s, box-shadow 0.15s;
+    font-weight: 700;
+    font-family: var(--body-font, 'Arial', 'Helvetica', sans-serif);
+    box-shadow: 4px 4px 0 var(--ink);
+    transition: transform 0.1s, box-shadow 0.1s;
   }
   .setup-group select:focus,
   .setup-group input:focus {
-    border-color: var(--yellow);
-    box-shadow: 0 0 0 2px rgba(255,214,0,0.25);
+    outline: none;
+    box-shadow: 4px 4px 0 var(--blue);
   }
   .btn {
-    background: var(--yellow);
-    color: #111;
+    background: #111;
+    color: var(--yellow);
     border: 3px solid var(--border);
-    border-radius: 4px;
-    padding: 9px 22px;
+    border-radius: 6px;
+    padding: 10px 18px;
     font-size: 14px;
     font-weight: 900;
     cursor: pointer;
     text-transform: uppercase;
-    letter-spacing: 1px;
+    letter-spacing: 0.5px;
     transition: transform 0.1s, box-shadow 0.1s;
-    box-shadow: 3px 3px 0 rgba(0,0,0,0.6);
+    box-shadow: 4px 4px 0 var(--ink);
     font-family: var(--head-font, 'Arial Black', 'Impact', sans-serif);
   }
   .btn:hover {
-    transform: translate(-1px, -1px);
-    box-shadow: 5px 5px 0 rgba(0,0,0,0.6);
+    transform: translate(-2px,-2px);
+    box-shadow: 6px 6px 0 var(--ink);
   }
   .btn:active {
-    transform: translate(1px, 1px);
-    box-shadow: 1px 1px 0 rgba(0,0,0,0.6);
+    transform: translate(2px,2px);
+    box-shadow: 0 0 0 var(--ink);
   }
   .btn-reset {
     background: var(--red);
@@ -253,30 +261,31 @@
     margin: 0 auto;
     background: var(--panel);
     border: 3px solid var(--border);
-    border-radius: 4px;
+    border-radius: 8px;
     padding: 24px 28px;
     position: relative;
-    box-shadow: 5px 5px 0 rgba(0,0,0,0.5);
+    box-shadow: 6px 6px 0 var(--ink);
   }
   .bracket-section-label {
     font-size: 13px;
     text-transform: uppercase;
-    letter-spacing: 3px;
+    letter-spacing: 0.5px;
     margin-bottom: 10px;
     font-weight: 900;
     display: inline-block;
-    padding: 3px 12px;
+    padding: 4px 12px;
+    border: 3px solid var(--border);
+    border-radius: 4px;
     clip-path: polygon(0 0, 100% 0, calc(100% - 8px) 100%, 0 100%);
+    font-family: var(--head-font, 'Arial Black', 'Impact', sans-serif);
   }
   .bracket-section-label.winners {
-    color: #fff;
+    color: #111;
     background: var(--yellow);
-    text-shadow: 1px 1px 0 rgba(0,0,0,0.4);
   }
   .bracket-section-label.losers {
     color: #fff;
     background: var(--red);
-    text-shadow: 1px 1px 0 rgba(0,0,0,0.4);
   }
   .bracket {
     display: flex;
@@ -300,8 +309,8 @@
     letter-spacing: 2px;
     color: var(--muted);
     margin-bottom: 2px;
-    font-weight: 700;
-    font-family: var(--body-font, 'Courier New', monospace);
+    font-weight: 900;
+    font-family: var(--body-font, 'Arial', 'Helvetica', sans-serif);
   }
   .map-input-wrap {
     margin-bottom: 8px;
@@ -313,70 +322,73 @@
     letter-spacing: 1.5px;
     color: var(--muted);
     margin-bottom: 3px;
-    font-weight: 700;
+    font-weight: 900;
   }
   .map-input-wrap input {
     width: 100%;
     min-width: 140px;
     background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 3px;
+    border: 3px solid var(--border);
+    border-radius: 6px;
     color: var(--ink);
     padding: 5px 8px;
     font-size: 11px;
     outline: none;
-    font-family: var(--body-font, 'Courier New', monospace);
-    transition: border-color 0.15s, box-shadow 0.15s;
+    font-weight: 700;
+    font-family: var(--body-font, 'Arial', 'Helvetica', sans-serif);
+    box-shadow: 4px 4px 0 var(--ink);
+    transition: transform 0.1s, box-shadow 0.1s;
   }
   .map-input-wrap input:focus {
-    border-color: var(--yellow);
-    box-shadow: 0 0 0 2px rgba(34,211,238,0.2);
+    outline: none;
+    box-shadow: 4px 4px 0 var(--blue);
   }
   .match {
     background: var(--card);
-    border: 2px solid var(--border);
-    border-radius: 3px;
+    border: 3px solid var(--border);
+    border-radius: 8px;
     padding: 8px 10px;
     min-width: 160px;
     font-size: 13px;
     cursor: pointer;
     transition: transform 0.1s, box-shadow 0.1s;
     position: relative;
-    box-shadow: 3px 3px 0 rgba(0,0,0,0.4);
+    box-shadow: 6px 6px 0 var(--ink);
   }
   .match:hover {
-    transform: translate(-2px, -2px);
-    box-shadow: 5px 5px 0 rgba(0,0,0,0.5);
-    border-color: var(--yellow);
+    transform: translate(-2px,-2px);
+    box-shadow: 8px 8px 0 var(--ink);
   }
   .match .row {
     display: flex;
     justify-content: space-between;
     padding: 4px 6px;
-    border-radius: 2px;
+    border-radius: 4px;
     margin: 1px 0;
   }
   .match .row .team {
-    font-weight: 700;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    font-weight: 900;
+    font-family: var(--body-font, 'Arial', 'Helvetica', sans-serif);
   }
   .match .row .server {
     color: var(--muted);
     font-size: 10px;
-    font-family: 'Consolas', 'SF Mono', monospace;
+    font-family: var(--body-font, 'Arial', 'Helvetica', sans-serif);
   }
   .match .row.winner {
-    background: linear-gradient(90deg, rgba(255,214,0,0.15), transparent);
-    border-left: 3px solid var(--yellow);
+    background: var(--yellow);
+    border-left: 3px solid var(--ink);
   }
-  .match .row.winner .team { color: var(--yellow); }
-  .match .row.pending { color: #555570; font-style: italic; }
+  .match .row.winner .team { color: #111; }
+  .match .row.pending { color: var(--muted); font-style: italic; }
   .match .round-tag {
     font-size: 9px;
     text-transform: uppercase;
     letter-spacing: 1.5px;
-    color: #555570;
+    color: var(--muted);
     margin-bottom: 4px;
+    font-weight: 900;
+    font-family: var(--head-font, 'Arial Black', 'Impact', sans-serif);
   }
   .status-dot {
     position: absolute;
@@ -385,13 +397,13 @@
     width: 8px;
     height: 8px;
     border-radius: 50%;
-    border: 1px solid rgba(0,0,0,0.3);
+    border: 1px solid var(--ink);
   }
-  .status-dot.scheduled { background: #555570; }
+  .status-dot.scheduled { background: var(--muted); }
   .status-dot.recorded { background: var(--yellow); }
   .arrow {
     align-self: center;
-    color: var(--muted);
+    color: var(--ink);
     font-size: 18px;
     font-weight: 900;
   }
@@ -400,8 +412,8 @@
     color: var(--muted);
     font-size: 14px;
     margin: 10px 0;
-    font-weight: 700;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    font-weight: 900;
+    font-family: var(--body-font, 'Arial', 'Helvetica', sans-serif);
   }
   .grand-final-wrap {
     display: flex;
@@ -411,11 +423,11 @@
     gap: 10px;
     min-width: 160px;
     padding: 14px;
-    background: rgba(255,214,0,0.05);
-    border: 3px solid var(--yellow);
-    border-radius: 4px;
+    background: var(--card);
+    border: 3px solid var(--border);
+    border-radius: 8px;
     position: relative;
-    box-shadow: 4px 4px 0 rgba(0,0,0,0.5);
+    box-shadow: 6px 6px 0 var(--ink);
   }
   .grand-final-wrap::before {
     content: "⚡";
@@ -423,7 +435,6 @@
     top: -14px;
     right: -10px;
     font-size: 28px;
-    filter: drop-shadow(2px 2px 0 rgba(0,0,0,0.5));
   }
   .grand-final-wrap .gf-note {
     font-size: 10px;
@@ -431,10 +442,10 @@
     max-width: 200px;
     line-height: 1.4;
     text-align: center;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-    font-weight: 400;
+    font-family: var(--body-font, 'Arial', 'Helvetica', sans-serif);
+    font-weight: 700;
   }
-  .grand-final-wrap .gf-note strong { color: var(--yellow); }
+  .grand-final-wrap .gf-note strong { color: var(--ink); }
   .bracket-main {
     display: flex;
     gap: 28px;
@@ -454,20 +465,21 @@
     text-align: center;
     margin-top: 6px;
     font-size: 18px;
-    color: var(--yellow);
+    color: var(--ink);
     font-weight: 900;
     text-transform: uppercase;
-    letter-spacing: 1px;
-    text-shadow: 2px 2px 0 var(--red);
+    letter-spacing: 0.5px;
+    font-family: var(--head-font, 'Arial Black', 'Impact', sans-serif);
   }
   .winner-banner .trophy { font-size: 22px; margin-right: 5px; }
   .final-match {
-    border: 3px solid var(--yellow);
-    background: linear-gradient(135deg, var(--card), #2a2a10);
+    border: 3px solid var(--ink);
+    background: var(--yellow);
   }
-  .final-match .round-tag { color: var(--yellow); }
+  .final-match .round-tag { color: #111; }
   .bye {
-    background: rgba(230,48,48,0.08);
+    background: var(--card);
+    opacity: 0.5;
     border-left: 3px solid var(--red);
   }
   .bye .team { color: var(--red); }
@@ -481,12 +493,11 @@
     font-size: 16px;
     font-weight: 900;
     text-transform: uppercase;
-    letter-spacing: 2px;
-    color: var(--yellow);
-    text-shadow: 0 0 6px rgba(34,211,238,0.5);
+    letter-spacing: 0.5px;
+    color: var(--ink);
     margin-bottom: 16px;
     padding-bottom: 8px;
-    border-bottom: 2px solid var(--border);
+    border-bottom: 3px solid var(--border);
   }
   .pool-groups {
     display: flex;
@@ -496,63 +507,68 @@
   }
   .pool-group {
     background: var(--card);
-    border: 2px solid var(--border);
-    border-radius: 4px;
+    border: 3px solid var(--border);
+    border-radius: 8px;
     padding: 14px 16px;
     min-width: 240px;
     flex: 1 1 240px;
-    box-shadow: 3px 3px 0 rgba(0,0,0,0.4);
+    box-shadow: 6px 6px 0 var(--ink);
   }
   .pool-group-title {
     font-family: var(--head-font, 'Arial Black', 'Impact', sans-serif);
     font-size: 12px;
     font-weight: 900;
     text-transform: uppercase;
-    letter-spacing: 1.5px;
-    color: var(--yellow);
+    letter-spacing: 0.5px;
+    color: var(--ink);
     margin-bottom: 10px;
     padding-bottom: 6px;
-    border-bottom: 1px solid var(--border);
+    border-bottom: 3px solid var(--border);
   }
   .pool-standings-table {
     width: 100%;
-    border-collapse: collapse;
+    border-collapse: separate;
+    border-spacing: 0;
     margin-bottom: 12px;
+    border: 3px solid var(--border);
   }
   .pool-standings-table th {
-    font-size: 9px;
+    font-size: 10px;
     text-transform: uppercase;
-    letter-spacing: 1px;
-    color: var(--muted);
-    font-weight: 700;
-    padding: 4px 6px;
+    letter-spacing: 0.5px;
+    color: #fff;
+    background: #111;
+    font-weight: 900;
+    padding: 6px 8px;
     text-align: left;
-    border-bottom: 1px solid var(--border);
+    border: 3px solid var(--border);
+    font-family: var(--head-font, 'Arial Black', 'Impact', sans-serif);
   }
   .pool-standings-table td {
-    padding: 5px 6px;
+    padding: 6px 8px;
     font-size: 12px;
-    border-bottom: 1px solid rgba(255,255,255,0.08);
+    font-weight: 700;
+    border: 3px solid var(--border);
   }
   .pool-standings-table .rank {
     font-weight: 900;
-    color: var(--yellow);
+    color: var(--ink);
     width: 24px;
   }
   .pool-standings-table .team-name {
-    font-weight: 700;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    font-weight: 900;
+    font-family: var(--body-font, 'Arial', 'Helvetica', sans-serif);
   }
   .pool-standings-table .pts {
     text-align: right;
     font-weight: 900;
-    color: var(--yellow);
+    color: var(--ink);
   }
   .pool-standings-table tr.qualified .team-name {
-    color: var(--yellow);
+    color: #111;
   }
   .pool-standings-table tr.qualified {
-    background: rgba(34,211,238,0.06);
+    background: var(--yellow);
   }
   .pool-matches {
     margin-top: 8px;
@@ -562,7 +578,7 @@
     text-transform: uppercase;
     letter-spacing: 1px;
     color: var(--muted);
-    font-weight: 700;
+    font-weight: 900;
     margin-bottom: 6px;
   }
   .pool-match-row {
@@ -571,24 +587,25 @@
     gap: 8px;
     padding: 5px 8px;
     background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 3px;
+    border: 3px solid var(--border);
+    border-radius: 6px;
     margin-bottom: 4px;
     font-size: 12px;
     cursor: pointer;
-    transition: border-color 0.15s, transform 0.1s;
+    box-shadow: 4px 4px 0 var(--ink);
+    transition: transform 0.1s, box-shadow 0.1s;
   }
   .pool-match-row:hover {
-    border-color: var(--yellow);
-    transform: translate(-1px, -1px);
+    transform: translate(-2px,-2px);
+    box-shadow: 6px 6px 0 var(--ink);
   }
   .pool-match-row .pm-team {
-    font-weight: 700;
+    font-weight: 900;
     flex: 1;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    font-family: var(--body-font, 'Arial', 'Helvetica', sans-serif);
   }
   .pool-match-row .pm-team.winner {
-    color: var(--yellow);
+    color: #111;
   }
   .pool-match-row .pm-score {
     font-weight: 900;
@@ -598,21 +615,21 @@
     font-size: 11px;
   }
   .pool-match-row .pm-score.has-result {
-    color: var(--yellow);
+    color: var(--ink);
   }
   .pool-divider {
     text-align: center;
     color: var(--muted);
     font-size: 13px;
-    font-weight: 700;
+    font-weight: 900;
     margin: 20px 0;
     padding: 10px;
-    border: 2px dashed var(--border);
-    border-radius: 4px;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    border: 3px dashed var(--border);
+    border-radius: 8px;
+    font-family: var(--body-font, 'Arial', 'Helvetica', sans-serif);
   }
   .pool-divider strong {
-    color: var(--yellow);
+    color: var(--ink);
   }
 
   /* MODAL */
@@ -620,26 +637,26 @@
     display: none;
     position: fixed;
     top: 0; left: 0; right: 0; bottom: 0;
-    background: rgba(0,0,0,0.8);
+    background: rgba(0,0,0,0.7);
     z-index: 1000;
     align-items: center;
     justify-content: center;
   }
   .modal-overlay.active { display: flex; }
   .modal {
-    background: var(--panel);
+    background: var(--card);
     border: 3px solid var(--border);
-    border-radius: 4px;
+    border-radius: 10px;
     padding: 22px 26px;
     min-width: 380px;
     max-width: 460px;
-    box-shadow: 6px 6px 0 rgba(0,0,0,0.6);
+    box-shadow: 8px 8px 0 var(--ink);
   }
   .tabs {
     display: flex;
     gap: 0;
     margin-bottom: 14px;
-    border-bottom: 2px solid var(--border);
+    border-bottom: 3px solid var(--border);
   }
   .tab {
     padding: 7px 16px;
@@ -651,10 +668,12 @@
     transition: color 0.15s, border-color 0.15s;
     text-transform: uppercase;
     letter-spacing: 1px;
+    font-family: var(--head-font, 'Arial Black', 'Impact', sans-serif);
   }
   .tab.active {
-    color: var(--yellow);
-    border-bottom-color: var(--yellow);
+    color: var(--ink);
+    border-bottom-color: var(--ink);
+    background: var(--yellow);
   }
   .tab:hover { color: var(--ink); }
   .tab-content { display: none; }
@@ -666,27 +685,29 @@
     letter-spacing: 1.5px;
     color: var(--muted);
     margin-bottom: 4px;
-    font-weight: 700;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    font-weight: 900;
+    font-family: var(--body-font, 'Arial', 'Helvetica', sans-serif);
   }
   .modal input,
   .modal select {
     width: 100%;
     background: var(--card);
-    border: 2px solid var(--border);
-    border-radius: 3px;
+    border: 3px solid var(--border);
+    border-radius: 6px;
     color: var(--ink);
-    padding: 8px 10px;
+    padding: 8px 12px;
     font-size: 14px;
     outline: none;
     margin-bottom: 10px;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-    transition: border-color 0.15s, box-shadow 0.15s;
+    font-weight: 700;
+    font-family: var(--body-font, 'Arial', 'Helvetica', sans-serif);
+    box-shadow: 4px 4px 0 var(--ink);
+    transition: transform 0.1s, box-shadow 0.1s;
   }
   .modal input:focus,
   .modal select:focus {
-    border-color: var(--yellow);
-    box-shadow: 0 0 0 2px rgba(255,214,0,0.2);
+    outline: none;
+    box-shadow: 4px 4px 0 var(--blue);
   }
   .modal-actions {
     display: flex;
@@ -695,25 +716,29 @@
     margin-top: 14px;
   }
   .modal-actions button {
-    padding: 7px 18px;
-    border-radius: 3px;
-    border: 2px solid var(--border);
+    padding: 10px 18px;
+    border-radius: 6px;
+    border: 3px solid var(--border);
     font-size: 12px;
     font-weight: 900;
     cursor: pointer;
     text-transform: uppercase;
-    letter-spacing: 1px;
+    letter-spacing: 0.5px;
     transition: transform 0.1s, box-shadow 0.1s;
-    box-shadow: 2px 2px 0 rgba(0,0,0,0.5);
+    box-shadow: 4px 4px 0 var(--ink);
     font-family: var(--head-font, 'Arial Black', 'Impact', sans-serif);
   }
+  .modal-actions button:hover {
+    transform: translate(-2px,-2px);
+    box-shadow: 6px 6px 0 var(--ink);
+  }
   .modal-actions button:active {
-    transform: translate(1px, 1px);
-    box-shadow: 0 0 0 rgba(0,0,0,0.5);
+    transform: translate(2px,2px);
+    box-shadow: 0 0 0 var(--ink);
   }
   .modal-actions .cancel {
-    background: var(--card);
-    color: var(--ink);
+    background: #111;
+    color: var(--yellow);
   }
   .modal-actions .confirm {
     background: var(--yellow);
@@ -728,37 +753,45 @@
     padding: 10px 0 18px;
     margin: 0 auto 20px;
     max-width: 900px;
-    border-bottom: 3px solid var(--border);
+    background: var(--panel);
+    border-bottom: 4px solid var(--ink);
   }
   .site-nav a {
     font-family: var(--head-font, 'Arial Black', 'Impact', sans-serif);
     font-weight: 900;
     text-transform: uppercase;
     font-size: 14px;
-    letter-spacing: 1px;
+    letter-spacing: 0.5px;
     text-decoration: none;
-    color: var(--muted);
-    padding: 6px 16px;
-    border: 2px solid transparent;
-    border-radius: 3px;
-    transition: color 0.15s, border-color 0.15s;
+    color: var(--ink);
+    padding: 8px 14px;
+    border: 3px solid transparent;
+    border-radius: 6px;
+    transition: color 0.15s, border-color 0.15s, background 0.15s, box-shadow 0.15s, transform 0.1s;
   }
   .site-nav a:hover {
-    color: var(--yellow);
+    border: 3px solid var(--ink);
   }
   .site-nav a.active {
-    color: var(--yellow);
-    border-color: var(--yellow);
-    background: rgba(34,211,238,0.08);
+    color: #111;
+    border: 3px solid var(--ink);
+    background: var(--yellow);
+    box-shadow: 4px 4px 0 var(--ink);
   }
 
+  /* SCROLLBARS */
+  ::-webkit-scrollbar { width: 14px; height: 14px; }
+  ::-webkit-scrollbar-track { background: var(--ink); }
+  ::-webkit-scrollbar-thumb { background: var(--yellow); border: 3px solid var(--ink); border-radius: 6px; }
+  ::-webkit-scrollbar-thumb:hover { background: var(--yellow); }
+  html { scrollbar-color: var(--yellow) var(--ink); }
 </style>
 </head>
 <body>
 
 <div class="site-nav">
-  <a href="/" class="active">Bracket Tracker</a>
-  <a href="/backgrounds/">Wallpaper Gallery</a>
+  <a href="." class="active">Bracket Tracker</a>
+  <a href="backgrounds/">Wallpaper Gallery</a>
 </div>
 
 <h1>⚡ Lechner LAN ⚡</h1>
@@ -1930,7 +1963,7 @@ function renderMatch(m, cls = '') {
   const statusDot = bothTeamsSet && !isBye
     ? (m.winner && m.winner !== 'BYE' ? '<div class="status-dot recorded"></div>' : '<div class="status-dot scheduled"></div>')
     : '';
-  const serverBadge = m.server ? `<div style="font-size: 10px; color: var(--muted); font-family: 'Consolas', 'SF Mono', monospace; margin-top: 5px; padding-top: 5px; border-top: 1px solid var(--border);">📍 ${m.server}</div>` : '';
+  const serverBadge = m.server ? `<div style="font-size: 10px; color: var(--muted); font-family: 'Arial', 'Helvetica', sans-serif; margin-top: 5px; padding-top: 5px; border-top: 1px solid var(--border);">📍 ${m.server}</div>` : '';
   const byeBadge = isBye ? `<div style="font-size: 10px; color: var(--red); margin-top: 3px; font-weight: 700;">BYE — auto-advances</div>` : '';
 
   return `<div${clsAttr} data-match-id="${m.id}">
