@@ -1,9 +1,9 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Lechner LAN â€” Bracket Tracker</title>
+<title>Lechner LAN — Bracket Tracker</title>
 <style>:root {
     --bg: #f5f3ff;
     --panel: #ffffff;
@@ -430,7 +430,7 @@
     box-shadow: 6px 6px 0 var(--ink);
   }
   .grand-final-wrap::before {
-    content: "âš¡";
+    content: "⚡";
     position: absolute;
     top: -14px;
     right: -10px;
@@ -794,10 +794,10 @@
   <a href="backgrounds/">Wallpaper Gallery</a>
 </div>
 
-<h1>âš¡ Lechner LAN âš¡</h1>
+<h1>⚡ Lechner LAN ⚡</h1>
 
 <div class="setup" id="setupPanel">
-  <h2>Tournament Setup <button class="setup-toggle" id="setupToggle" onclick="toggleSetup()">Hide â–²</button></h2>
+  <h2>Tournament Setup <button class="setup-toggle" id="setupToggle" onclick="toggleSetup()">Hide ▲</button></h2>
   <div class="setup-details" id="setupDetails">
   <div class="setup-row">
     <div class="setup-group">
@@ -857,7 +857,7 @@
     </div>
   </div>
   <div class="team-inputs-wrap" id="teamInputsWrap">
-    <label>Team Names (optional â€” enter now or add later via the bracket)</label>
+    <label>Team Names (optional — enter now or add later via the bracket)</label>
     <div class="team-inputs-grid" id="teamInputsGrid"></div>
   </div>
   <div class="team-inputs-wrap" id="mapInputsWrap">
@@ -1121,7 +1121,7 @@ function generateBracket(playerCount, format, teamNames) {
     //   - Winners round 2..rounds = Main R2..Final
     //   - Losers: standard losers bracket for `bracketSize` slots,
     //     but W-R0 (prelim) losers do NOT drop into losers (they're eliminated in prelim
-    //     for double-elim? No â€” in double-elim they should drop into losers.)
+    //     for double-elim? No — in double-elim they should drop into losers.)
     //
     // For simplicity and to match the reference screenshot (which shows prelim
     // losers going into the losers bracket), we'll:
@@ -1459,7 +1459,7 @@ function arrangeSeeds(teams, size) {
     teams = [...teams, ...byes];
   }
   const result = new Array(size).fill(null);
-  // Standard seeding: 1, 2, 3, 4 â†’ positions 0, size/2-1, size/4-1, size/4
+  // Standard seeding: 1, 2, 3, 4 → positions 0, size/2-1, size/4-1, size/4
   // Use the standard "snake" arrangement
   const seeds = teams.map((t, i) => ({ team: t, seed: i + 1 }));
 
@@ -1497,7 +1497,7 @@ function savePoolMatchResult(matchId, winner, score1, score2) {
   match.score1 = score1;
   match.score2 = score2;
 
-  // Check if all pools are complete â†’ auto-generate bracket
+  // Check if all pools are complete → auto-generate bracket
   if (poolsComplete()) {
     const bracketFormat = document.getElementById('poolBracketFormat') ? document.getElementById('poolBracketFormat').value : 'single';
     if (bracketFormat === 'single') {
@@ -1595,7 +1595,7 @@ function renderBracket() {
 function renderPoolPlay() {
   const content = document.getElementById('bracketContent');
   let html = '<div class="pool-phase">';
-  html += '<div class="pool-phase-title">âš” Pool Play â€” Round Robin</div>';
+  html += '<div class="pool-phase-title">⚔ Pool Play — Round Robin</div>';
   html += '<div class="pool-groups">';
 
   const numPools = tournament.pools.length;
@@ -1606,12 +1606,12 @@ function renderPoolPlay() {
     html += `<div class="pool-group">`;
     html += `<div class="pool-group-title">Pool ${pool.id + 1} (${pool.realTeams.length} teams)</div>`;
     html += '<table class="pool-standings-table">';
-    html += '<tr><th>#</th><th>Team</th><th>W-L</th><th>Â±</th><th>Pts</th></tr>';
+    html += '<tr><th>#</th><th>Team</th><th>W-L</th><th>±</th><th>Pts</th></tr>';
     standings.forEach((s, i) => {
       const qualified = i < qualifying ? ' qualified' : '';
       html += `<tr class="${qualified}">
         <td class="rank">${i + 1}</td>
-        <td class="team-name">${s.team || 'â€”'}</td>
+        <td class="team-name">${s.team || '—'}</td>
         <td>${s.wins}-${s.losses}</td>
         <td>${s.diff > 0 ? '+' : ''}${s.diff}</td>
         <td class="pts">${s.points}</td>
@@ -1623,15 +1623,15 @@ function renderPoolPlay() {
     html += '<div class="pool-matches">';
     html += '<div class="pool-matches-label">Matches</div>';
     pool.matches.forEach(m => {
-      const s1 = m.score1 !== null ? m.score1 : 'Â·';
-      const s2 = m.score2 !== null ? m.score2 : 'Â·';
+      const s1 = m.score1 !== null ? m.score1 : '·';
+      const s2 = m.score2 !== null ? m.score2 : '·';
       const w1 = m.winner === m.team1 ? ' winner' : '';
       const w2 = m.winner === m.team2 ? ' winner' : '';
       const hasScore = m.score1 !== null && m.score2 !== null;
       html += `<div class="pool-match-row" data-match-id="${m.id}">
-        <span class="pm-team${w1}">${m.team1 || 'â€”'}</span>
+        <span class="pm-team${w1}">${m.team1 || '—'}</span>
         <span class="pm-score${hasScore ? ' has-result' : ''}">${s1}</span>
-        <span class="pm-team${w2}">${m.team2 || 'â€”'}</span>
+        <span class="pm-team${w2}">${m.team2 || '—'}</span>
         <span class="pm-score${hasScore ? ' has-result' : ''}">${s2}</span>
       </div>`;
     });
@@ -1643,7 +1643,7 @@ function renderPoolPlay() {
 
   // If all pools complete, show the bracket
   if (poolsComplete()) {
-    html += '<div class="pool-divider">ðŸ Pools complete â€” <strong>advancing to bracket</strong></div>';
+    html += '<div class="pool-divider">🏆 Pools complete — <strong>advancing to bracket</strong></div>';
     html += '</div>'; // close pool-phase
     html += '<div class="bracket-phase">';
 
@@ -1671,7 +1671,7 @@ function renderPoolPlay() {
     // Show progress
     const totalMatches = tournament.pools.reduce((s, p) => s + p.matches.length, 0);
     const doneMatches = tournament.pools.reduce((s, p) => s + p.matches.filter(m => m.winner).length, 0);
-    html += `<div class="pool-divider">${doneMatches} / ${totalMatches} matches recorded â€” complete all pool matches to advance</div>`;
+    html += `<div class="pool-divider">${doneMatches} / ${totalMatches} matches recorded — complete all pool matches to advance</div>`;
     html += '</div>'; // close pool-phase
   }
 
@@ -1679,7 +1679,7 @@ function renderPoolPlay() {
 }
 
 /**
- * Render single-elim bracket HTML from a bracket object (used for poolâ†’bracket).
+ * Render single-elim bracket HTML from a bracket object (used for pool→bracket).
  */
 function renderSingleElimHTML(bracket) {
   if (!tournament.roundMaps) tournament.roundMaps = {};
@@ -1696,24 +1696,24 @@ function renderSingleElimHTML(bracket) {
     const label = `Round ${round + 1}`;
     html += '<div class="col">';
     html += `<div class="col-label">${label}</div>`;
-    if (mapVal) html += `<div class="round-map-display">ðŸ—º ${mapVal}</div>`;
+    if (mapVal) html += `<div class="round-map-display">🗺 ${mapVal}</div>`;
     roundMatches.forEach(m => {
       html += renderMatch(m, round === finalRound ? 'final' : '');
     });
     html += '</div>';
-    if (round < totalRounds - 1) html += '<div class="arrow">â†’</div>';
+    if (round < totalRounds - 1) html += '<div class="arrow">→</div>';
   }
   html += '</div>';
 
   const finalMatch = matches[matches.length - 1];
   if (finalMatch && finalMatch.winner && finalMatch.winner !== 'BYE') {
-    html += `<div class="winner-banner"><span class="trophy">ðŸ†</span>${finalMatch.winner}</div>`;
+    html += `<div class="winner-banner"><span class="trophy">🏆</span>${finalMatch.winner}</div>`;
   }
   return html;
 }
 
 /**
- * Render double-elim bracket HTML from a bracket object (used for poolâ†’bracket).
+ * Render double-elim bracket HTML from a bracket object (used for pool→bracket).
  */
 function renderDoubleElimHTML(bracket) {
   if (!tournament.roundMaps) tournament.roundMaps = {};
@@ -1732,15 +1732,15 @@ function renderDoubleElimHTML(bracket) {
     const mapVal = (tournament.roundMaps && tournament.roundMaps[mapKey]) || '';
     html += '<div class="col">';
     html += `<div class="col-label">Winners R${round + 1}</div>`;
-    if (mapVal) html += `<div class="round-map-display">ðŸ—º ${mapVal}</div>`;
+    if (mapVal) html += `<div class="round-map-display">🗺 ${mapVal}</div>`;
     roundMatches.forEach(m => {
       html += renderMatch(m, round === wRounds - 1 ? 'final' : '');
     });
     html += '</div>';
-    if (round < wRounds - 1) html += '<div class="arrow">â†’</div>';
+    if (round < wRounds - 1) html += '<div class="arrow">→</div>';
   }
   html += '</div>';
-  html += '<div class="flow">â†“ losers drop here â†“</div>';
+  html += '<div class="flow">↓ losers drop here ↓</div>';
   html += '<div class="bracket-section-label losers">LOSERS BRACKET</div>';
   html += '<div class="bracket losers-bracket">';
   const lMatches = bracket.matches.losers;
@@ -1756,12 +1756,12 @@ function renderDoubleElimHTML(bracket) {
       const mapVal = (tournament.roundMaps && tournament.roundMaps[mapKey]) || '';
       html += '<div class="col">';
       html += `<div class="col-label">Losers ${roundNames[round] || 'R' + (round + 1)}</div>`;
-      if (mapVal) html += `<div class="round-map-display">ðŸ—º ${mapVal}</div>`;
+      if (mapVal) html += `<div class="round-map-display">🗺 ${mapVal}</div>`;
       roundMatches.forEach(m => {
         html += renderMatch(m, round === lRounds - 1 ? 'final' : '');
       });
       html += '</div>';
-      if (round < lRounds - 1) html += '<div class="arrow">â†’</div>';
+      if (round < lRounds - 1) html += '<div class="arrow">→</div>';
     }
   }
   html += '</div>';
@@ -1783,12 +1783,12 @@ function renderDoubleElimHTML(bracket) {
   const gfMapVal = (tournament.roundMaps && tournament.roundMaps['GF']) || '';
   html += '<div class="grand-final-wrap">';
   html += '<div class="col-label" style="color: var(--yellow); font-size: 10px; letter-spacing: 2px; font-weight: 900;">GRAND FINAL</div>';
-  if (gfMapVal) html += `<div class="round-map-display">ðŸ—º ${gfMapVal}</div>`;
+  if (gfMapVal) html += `<div class="round-map-display">🗺 ${gfMapVal}</div>`;
   html += renderMatch(bracket.grandFinal, 'final');
   if (bracket.grandFinal.winner && bracket.grandFinal.winner !== 'BYE') {
-    html += `<div class="winner-banner"><span class="trophy">ðŸ†</span>${bracket.grandFinal.winner}</div>`;
+    html += `<div class="winner-banner"><span class="trophy">🏆</span>${bracket.grandFinal.winner}</div>`;
   } else {
-    html += '<div class="winner-banner"><span class="trophy">ðŸ†</span>Champion</div>';
+    html += '<div class="winner-banner"><span class="trophy">🏆</span>Champion</div>';
   }
   html += '</div>';
   html += '</div>'; // bracket-main
@@ -1821,18 +1821,18 @@ function renderSingleElim() {
     }
     html += '<div class="col">';
     html += `<div class="col-label">${label}</div>`;
-    if (mapVal) html += `<div class="round-map-display">ðŸ—º ${mapVal}</div>`;
+    if (mapVal) html += `<div class="round-map-display">🗺 ${mapVal}</div>`;
     roundMatches.forEach(m => {
       html += renderMatch(m, round === finalRound ? 'final' : '');
     });
     html += '</div>';
-    if (round < totalRounds - 1) html += '<div class="arrow">â†’</div>';
+    if (round < totalRounds - 1) html += '<div class="arrow">→</div>';
   }
   html += '</div>';
 
   const finalMatch = matches[matches.length - 1];
   if (finalMatch && finalMatch.winner && finalMatch.winner !== 'BYE') {
-    html += `<div class="winner-banner"><span class="trophy">ðŸ†</span>${finalMatch.winner}</div>`;
+    html += `<div class="winner-banner"><span class="trophy">🏆</span>${finalMatch.winner}</div>`;
   }
 
   content.innerHTML = html;
@@ -1865,16 +1865,16 @@ function renderDoubleElim() {
     }
     html += '<div class="col">';
     html += `<div class="col-label">${label}</div>`;
-    if (mapVal) html += `<div class="round-map-display">ðŸ—º ${mapVal}</div>`;
+    if (mapVal) html += `<div class="round-map-display">🗺 ${mapVal}</div>`;
     roundMatches.forEach(m => {
       html += renderMatch(m, round === wRounds - 1 ? 'final' : '');
     });
     html += '</div>';
-    if (round < wRounds - 1) html += '<div class="arrow">â†’</div>';
+    if (round < wRounds - 1) html += '<div class="arrow">→</div>';
   }
   html += '</div>';
 
-  html += '<div class="flow">â†“ losers drop here â†“</div>';
+  html += '<div class="flow">↓ losers drop here ↓</div>';
 
   html += '<div class="bracket-section-label losers">LOSERS BRACKET</div>';
   html += '<div class="bracket losers-bracket">';
@@ -1897,12 +1897,12 @@ function renderDoubleElim() {
     const mapVal = tournament.roundMaps[mapKey] || '';
     html += '<div class="col">';
     html += `<div class="col-label">Losers ${roundNames[round] || 'R' + (round + 1)}</div>`;
-    if (mapVal) html += `<div class="round-map-display">ðŸ—º ${mapVal}</div>`;
+    if (mapVal) html += `<div class="round-map-display">🗺 ${mapVal}</div>`;
     roundMatches.forEach(m => {
       html += renderMatch(m, round === lRounds - 1 ? 'final' : '');
     });
     html += '</div>';
-    if (round < lRounds - 1) html += '<div class="arrow">â†’</div>';
+    if (round < lRounds - 1) html += '<div class="arrow">→</div>';
   }
   html += '</div>';
   } // end if lMatches.length > 0
@@ -1932,12 +1932,12 @@ function renderDoubleElim() {
   const gfMapVal = tournament.roundMaps['GF'] || '';
   html += '<div class="grand-final-wrap">';
   html += '<div class="col-label" style="color: var(--yellow); font-size: 10px; letter-spacing: 2px; font-weight: 900;">GRAND FINAL</div>';
-  if (gfMapVal) html += `<div class="round-map-display">ðŸ—º ${gfMapVal}</div>`;
+  if (gfMapVal) html += `<div class="round-map-display">🗺 ${gfMapVal}</div>`;
   html += renderMatch(gfMatch, 'final');
   if (gfMatch.winner && gfMatch.winner !== 'BYE') {
-    html += `<div class="winner-banner"><span class="trophy">ðŸ†</span>${gfMatch.winner}</div>`;
+    html += `<div class="winner-banner"><span class="trophy">🏆</span>${gfMatch.winner}</div>`;
   } else {
-    html += '<div class="winner-banner"><span class="trophy">ðŸ†</span>Champion</div>';
+    html += '<div class="winner-banner"><span class="trophy">🏆</span>Champion</div>';
   }
   html += '<div class="gf-note"><strong>Reset rule:</strong> If the losers champion wins, they get one more match.</div>';
   html += '</div>';
@@ -1949,13 +1949,13 @@ function renderDoubleElim() {
 
 function renderMatch(m, cls = '') {
   const clsAttr = cls ? ` class="match ${cls}"` : ' class="match"';
-  const t1 = m.team1 || 'â€”';
-  const t2 = m.team2 || 'â€”';
+  const t1 = m.team1 || '—';
+  const t2 = m.team2 || '—';
   
   // Detect BYE situations: only when one slot is literally 'BYE'
   const isBye = m.team1 === 'BYE' || m.team2 === 'BYE';
-  const hasT1 = m.team1 && m.team1 !== 'â€”' && m.team1 !== '' && m.team1 !== 'BYE';
-  const hasT2 = m.team2 && m.team2 !== 'â€”' && m.team2 !== '' && m.team2 !== 'BYE';
+  const hasT1 = m.team1 && m.team1 !== '—' && m.team1 !== '' && m.team1 !== 'BYE';
+  const hasT2 = m.team2 && m.team2 !== '—' && m.team2 !== '' && m.team2 !== 'BYE';
   
   const winnerRow1 = m.winner === m.team1 ? 'winner' : '';
   const winnerRow2 = m.winner === m.team2 ? 'winner' : '';
@@ -1963,8 +1963,8 @@ function renderMatch(m, cls = '') {
   const statusDot = bothTeamsSet && !isBye
     ? (m.winner && m.winner !== 'BYE' ? '<div class="status-dot recorded"></div>' : '<div class="status-dot scheduled"></div>')
     : '';
-  const serverBadge = m.server ? `<div style="font-size: 10px; color: var(--muted); font-family: 'Arial', 'Helvetica', sans-serif; margin-top: 5px; padding-top: 5px; border-top: 1px solid var(--border);">ðŸ“ ${m.server}</div>` : '';
-  const byeBadge = isBye ? `<div style="font-size: 10px; color: var(--red); margin-top: 3px; font-weight: 700;">BYE â€” auto-advances</div>` : '';
+  const serverBadge = m.server ? `<div style="font-size: 10px; color: var(--muted); font-family: 'Arial', 'Helvetica', sans-serif; margin-top: 5px; padding-top: 5px; border-top: 1px solid var(--border);">🛍 ${m.server}</div>` : '';
+  const byeBadge = isBye ? `<div style="font-size: 10px; color: var(--red); margin-top: 3px; font-weight: 700;">BYE — auto-advances</div>` : '';
 
   return `<div${clsAttr} data-match-id="${m.id}">
     ${statusDot}
@@ -2051,7 +2051,7 @@ function savePoolResult() {
   if (t1) match.team1 = t1;
   if (t2) match.team2 = t2;
 
-  // Check if all pools complete â†’ auto-generate bracket
+  // Check if all pools complete → auto-generate bracket
   if (poolsComplete()) {
     const bracketFormat = document.getElementById('poolBracketFormat') ? document.getElementById('poolBracketFormat').value : 'single';
     if (bracketFormat === 'single') {
@@ -2122,8 +2122,8 @@ function openModal(matchId) {
   if (!match) return;
 
   // Detect BYE situations: only when one slot is literally 'BYE'
-  const hasT1 = match.team1 && match.team1 !== 'â€”' && match.team1 !== '' && match.team1 !== 'BYE';
-  const hasT2 = match.team2 && match.team2 !== 'â€”' && match.team2 !== '' && match.team2 !== 'BYE';
+  const hasT1 = match.team1 && match.team1 !== '—' && match.team1 !== '' && match.team1 !== 'BYE';
+  const hasT2 = match.team2 && match.team2 !== '—' && match.team2 !== '' && match.team2 !== 'BYE';
   const isByeMatch = match.team1 === 'BYE' || match.team2 === 'BYE';
 
   // Populate inputs
@@ -2148,7 +2148,7 @@ function openModal(matchId) {
       document.getElementById('team2Input').disabled = true;
       document.getElementById('team2Input').placeholder = 'BYE (auto-advances)';
     } else {
-      // No explicit BYE marker â€” treat as single-team match
+      // No explicit BYE marker — treat as single-team match
       if (hasT1) {
         document.getElementById('team1Input').value = match.team1 || '';
         document.getElementById('team1Input').disabled = false;
@@ -2183,7 +2183,7 @@ function openModal(matchId) {
     if (realTeam) {
       winnerSelect.innerHTML += `<option value="${realTeam}" selected>${realTeam} (auto-advances)</option>`;
     } else {
-      // No real team yet â€” no winner options available
+      // No real team yet — no winner options available
       winnerSelect.innerHTML = '<option value="" disabled selected>Enter team first...</option>';
     }
   } else {
@@ -2203,13 +2203,13 @@ function openModal(matchId) {
   }
 
   if (hasTeams && !match.winner) {
-    // Teams set but no winner yet â†’ open to Record Result tab
+    // Teams set but no winner yet → open to Record Result tab
     switchTab('result');
   } else if (!hasTeams) {
-    // No teams set â†’ open to Set Match tab
+    // No teams set → open to Set Match tab
     switchTab('set');
   } else {
-    // Both teams and winner set â†’ open to Record Result tab (to edit)
+    // Both teams and winner set → open to Record Result tab (to edit)
     switchTab('result');
   }
 
@@ -2226,7 +2226,7 @@ function closeModal() {
 }
 
 function saveMatch() {
-  // Handle pool matches â€” save server and any edited team names, don't force winner
+  // Handle pool matches — save server and any edited team names, don't force winner
   if (currentMatchId && currentMatchId.startsWith('P')) {
     const poolIdx = parseInt(currentMatchId.split('-')[0].replace('P', ''));
     const match = tournament.pools[poolIdx].matches.find(m => m.id === currentMatchId);
@@ -2279,8 +2279,8 @@ function saveMatch() {
   if (!match) return;
 
   // Detect BYE situations: only when one slot is literally 'BYE'
-  const hasT1 = match.team1 && match.team1 !== 'â€”' && match.team1 !== '' && match.team1 !== 'BYE';
-  const hasT2 = match.team2 && match.team2 !== 'â€”' && match.team2 !== '' && match.team2 !== 'BYE';
+  const hasT1 = match.team1 && match.team1 !== '—' && match.team1 !== '' && match.team1 !== 'BYE';
+  const hasT2 = match.team2 && match.team2 !== '—' && match.team2 !== '' && match.team2 !== 'BYE';
   const isByeMatch = match.team1 === 'BYE' || match.team2 === 'BYE';
 
   if (isByeMatch) {
@@ -2409,16 +2409,16 @@ function propagateWinner(match, winner) {
       const r1Idx = directTeams + Math.floor(matchIndexInRound / 2);
       const slot = matchIndexInRound % 2 === 0 ? 'team1' : 'team2';
       if (mainR1Matches[r1Idx]) {
-        if (mainR1Matches[r1Idx][slot] === null || mainR1Matches[r1Idx][slot] === 'â€”' || mainR1Matches[r1Idx][slot] === '') {
+        if (mainR1Matches[r1Idx][slot] === null || mainR1Matches[r1Idx][slot] === '—' || mainR1Matches[r1Idx][slot] === '') {
           mainR1Matches[r1Idx][slot] = winner;
         }
       }
     } else {
-      // Standard propagation: round N â†’ round N+1
+      // Standard propagation: round N → round N+1
       const nextMatch = nextMatches[Math.floor(matchIndexInRound / 2)];
       if (nextMatch) {
         const slot = matchIndexInRound % 2 === 0 ? 'team1' : 'team2';
-        if (nextMatch[slot] === null || nextMatch[slot] === 'â€”' || nextMatch[slot] === '') {
+        if (nextMatch[slot] === null || nextMatch[slot] === '—' || nextMatch[slot] === '') {
           nextMatch[slot] = winner;
         }
       }
@@ -2443,7 +2443,7 @@ function propagateWinner(match, winner) {
           const r1Idx = directTeams + Math.floor(matchIndexInRound / 2);
           const slot = matchIndexInRound % 2 === 0 ? 'team1' : 'team2';
           if (mainR1Matches[r1Idx]) {
-            if (mainR1Matches[r1Idx][slot] === null || mainR1Matches[r1Idx][slot] === 'â€”' || mainR1Matches[r1Idx][slot] === '') {
+            if (mainR1Matches[r1Idx][slot] === null || mainR1Matches[r1Idx][slot] === '—' || mainR1Matches[r1Idx][slot] === '') {
               mainR1Matches[r1Idx][slot] = winner;
             }
           }
@@ -2451,7 +2451,7 @@ function propagateWinner(match, winner) {
           const nextMatch = nextWMatches[Math.floor(matchIndexInRound / 2)];
           if (nextMatch) {
             const slot = matchIndexInRound % 2 === 0 ? 'team1' : 'team2';
-            if (nextMatch[slot] === null || nextMatch[slot] === 'â€”' || nextMatch[slot] === '') {
+            if (nextMatch[slot] === null || nextMatch[slot] === '—' || nextMatch[slot] === '') {
               nextMatch[slot] = winner;
             }
           }
@@ -2479,21 +2479,25 @@ function propagateWinner(match, winner) {
           losersR1[lIdx][slot] = (loser && loser !== 'BYE') ? loser : 'BYE';
         }
       } else if (loser && loser !== 'BYE' && loser !== null && loser !== '') {
+        // Standard double-elim drop mapping (e.g. 8-team bracket):
+        //   - Losers round R receives the losers of Winners round R + 1
+        //     (W-R1 losers -> Losers QF, W-R2 losers -> Losers SF,
+        //      W-Final loser -> Losers Final).
+        //   - With prelim, winners round indices are shifted by 1, so undo
+        //     the shift first: main round = match.round - 1.
         const maxLosersRound = Math.max(...losersMatches.map(m => m.round));
-        const winnersRounds = Math.log2(bracket.bracketSize);
-
-        const effectiveRound = hasPrelim ? match.round - 1 : match.round;
+        const mainRound = hasPrelim ? match.round - 1 : match.round;
 
         if (match.round === totalRounds - 1) {
           const lFinalMatches = losersMatches.filter(m => m.round === maxLosersRound);
           if (lFinalMatches.length > 0) {
             const targetMatch = lFinalMatches[0];
-            if (targetMatch.team2 === null || targetMatch.team2 === 'â€”' || targetMatch.team2 === '') {
+            if (targetMatch.team2 === null || targetMatch.team2 === '—' || targetMatch.team2 === '') {
               targetMatch.team2 = loser;
             }
           }
         } else {
-          const losersRound = hasPrelim ? match.round - 1 : match.round;
+          const losersRound = mainRound + 1;
           const losersInRound = losersMatches.filter(m => m.round === losersRound);
           if (losersInRound.length > 0) {
             const wMatchesInRound = wAll.filter(m => m.round === match.round);
@@ -2503,7 +2507,7 @@ function propagateWinner(match, winner) {
             const targetMatch = losersInRound[Math.floor(wIdx / 2)];
             const slot = (wIdx % 2 === 0) ? 'team1' : 'team2';
             if (targetMatch) {
-              if (targetMatch[slot] === null || targetMatch[slot] === 'â€”' || targetMatch[slot] === '') {
+              if (targetMatch[slot] === null || targetMatch[slot] === '—' || targetMatch[slot] === '') {
                 targetMatch[slot] = loser;
               }
             }
@@ -2531,7 +2535,7 @@ function propagateWinner(match, winner) {
         }
 
         if (targetMatch) {
-          if (targetMatch[slot] === null || targetMatch[slot] === 'â€”' || targetMatch[slot] === '') {
+          if (targetMatch[slot] === null || targetMatch[slot] === '—' || targetMatch[slot] === '') {
             targetMatch[slot] = winner;
           }
         }
@@ -2623,9 +2627,9 @@ function toggleSetup() {
   panel.classList.toggle('collapsed');
   const btn = document.getElementById('setupToggle');
   if (panel.classList.contains('collapsed')) {
-    btn.textContent = 'Show â–¼';
+    btn.textContent = 'Show ▼';
   } else {
-    btn.textContent = 'Hide â–²';
+    btn.textContent = 'Hide ▲';
   }
 }
 
@@ -2633,7 +2637,7 @@ function collapseSetup() {
   const panel = document.getElementById('setupPanel');
   if (!panel.classList.contains('collapsed')) {
     panel.classList.add('collapsed');
-    document.getElementById('setupToggle').textContent = 'Show â–¼';
+    document.getElementById('setupToggle').textContent = 'Show ▼';
   }
 }
 
@@ -2641,7 +2645,7 @@ function expandSetup() {
   const panel = document.getElementById('setupPanel');
   if (panel.classList.contains('collapsed')) {
     panel.classList.remove('collapsed');
-    document.getElementById('setupToggle').textContent = 'Hide â–²';
+    document.getElementById('setupToggle').textContent = 'Hide ▲';
   }
 }
 
