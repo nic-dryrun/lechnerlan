@@ -1229,12 +1229,33 @@ function generateBracket(playerCount, format, teamNames) {
     }
     // Remaining R1 slots stay null (filled by prelim winners at runtime)
 
-    // Losers bracket: standard for bracketSize
-    const losersR1Count = Math.floor(bracketSize / 4);
+    // Losers bracket shape (with prelim):
+    //   - Losers R1 (round 0): one match per Main R1 match, i.e. mainR1
+    //     matches. Each match holds two drops: the prelim losers of the
+    //     two prelims that feed into that Main R1 match (prelim losers map
+    //     to floor(prelimIdx / 2), which equals floor(mainR1Idx / 2) after
+    //     the standard pairing), plus the Main R1 loser itself (mainR1
+    //     losers also map to floor(mainR1Idx / 2), so each Losers R1 match
+    //     holds one prelim loser + the Main R1 loser — see propagateWinner).
+    //     The power-of-2 formula (bracketSize/4) under-counts when the main
+    //     bracket is smaller than 2x the number of prelim matches
+    //     (e.g. 7 teams -> 3 prelims, mainSize 4 -> formula gives 1, but
+    //     2 are needed).
+    //   - Losers R2 (round 1): receives the W-R2 (main R2) losers. With
+    //     prelim, W round indices are shifted by 1, so the standard drop
+    //     mapping "Losers round R receives Winners round R+1 losers" becomes
+    //     "Losers round R receives W round R+2 losers" after the shift,
+    //     which lands on Losers round R (not R+1 as the power-of-2 formula
+    //     assumes). Hence Losers R2 has mainR1/2 matches.
+    //   - Losers R3..Final (rounds 2..rounds): standard power-of-2
+    //     halving (mainR1/4, ..., 1).
+    const losersR1Count = prelim.mainR1;
     for (let mIdx = 0; mIdx < losersR1Count; mIdx++) {
       matches.losers.push(mk(`L-${lId}`, 0));
       lId++;
     }
+    // Losers R2..R(rounds-1) (rounds 1..rounds-1): standard halving from
+    // mainR1/2 down to 2.
     for (let round = 1; round < rounds; round++) {
       const numMatches = Math.pow(2, rounds - 1 - round);
       for (let mIdx = 0; mIdx < numMatches; mIdx++) {
@@ -1242,7 +1263,14 @@ function generateBracket(playerCount, format, teamNames) {
         lId++;
       }
     }
-    if (bracketSize <= 8) {
+    // Losers Final (round `rounds`): 1 match, present when the Losers
+    // SF is a single match (mainSize <= 4) OR when the main bracket has
+    // 8 teams (mainSize 8, Losers SF = 2 matches). For mainSize 8 the
+    // "Losers Final" is the match that the Losers SF feeds into; for
+    // mainSize 4 it's the single Losers SF. Both are needed because the
+    // Grand Final requires a Losers champion, which is the winner of this
+    // Losers Final.
+    if (prelim.mainSize <= 4 || prelim.mainSize === 8) {
       matches.losers.push(mk(`L-${lId}`, rounds));
       lId++;
     }
@@ -2497,7 +2525,18 @@ function propagateWinner(match, winner) {
             }
           }
         } else {
-          const losersRound = mainRound + 1;
+          // Standard drop mapping: Losers round R receives the losers of
+          // Winners round R + 1 (power-of-2 double-elim convention, e.g.
+          // 8-team: W-R1 losers -> L-R1, W-R2 losers -> L-R2, W-Final
+          // loser -> L-Final). With prelim, the Winners round index is
+          // shifted by +1 relative to the "main" round, so the Losers
+          // round index also shifts by +1:
+          //   - W-R2 (main R2) losers -> Losers round 2
+          //   - W-R3 (main R3) losers -> Losers round 3
+          // This matches the structural shape of the Losers bracket
+          // (R0 = prelim + Main R1 losers, R1 = Losers SF for mainSize 4
+          // or the "Final" slot, R2 = W-R2 losers, ...).
+          const losersRound = (hasPrelim ? mainRound + 2 : mainRound + 1);
           const losersInRound = losersMatches.filter(m => m.round === losersRound);
           if (losersInRound.length > 0) {
             const wMatchesInRound = wAll.filter(m => m.round === match.round);
